@@ -4,8 +4,10 @@
   "sourceRoot": "apps/core/src",
   "compilerOptions": {
     "deleteOutDir": true,
-    "webpack": true,
-    "tsConfigPath": "apps/core/tsconfig.app.json"
+    "webpack": false,
+    "tsConfigPath": "apps/core/tsconfig.app.json",
+    "assets": ["**/*.proto"],
+    "watchAssets": true
   },
   "monorepo": true,
   "root": "apps/core",
@@ -16,7 +18,9 @@
       "entryFile": "main",
       "sourceRoot": "apps/core/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/core/tsconfig.app.json"
+        "tsConfigPath": "apps/core/tsconfig.app.json",
+        "assets": ["**/*.proto"],
+        "watchAssets": true
       }
     },
     "ws": {
@@ -25,7 +29,18 @@
       "entryFile": "main",
       "sourceRoot": "apps/ws/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/ws/tsconfig.app.json"
+        "tsConfigPath": "apps/ws/tsconfig.app.json",
+        "assets": ["**/*.proto"],
+        "watchAssets": true
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "common",
+      "entryFile": "index",
+      "sourceRoot": "common/src",
+      "compilerOptions": {
+        "tsConfigPath": "common/tsconfig.lib.json"
       }
     }
   }

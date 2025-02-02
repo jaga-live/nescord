@@ -1,0 +1,12 @@
+{
+  "name": "@nescord/core",
+  "version": "1.0.0",
+  "description": "Core application package for Nescord",
+  "scripts": {
+    "start": "nest start",
+    "build": "tsc -p tsconfig.app.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

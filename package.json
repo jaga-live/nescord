@@ -17,11 +17,16 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/nescord/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/nescord/test/jest-e2e.json",
+    "build:core": "cd apps/core && npm run build",
+    "build:ws": "cd apps/ws && npm run build",
+    "copy:proto": "cp -r proto dist/"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.12.5",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/microservices": "^11.0.7",
     "@nestjs/platform-express": "^11.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
