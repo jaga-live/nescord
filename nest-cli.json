@@ -36,11 +36,11 @@
     },
     "common": {
       "type": "library",
-      "root": "common",
+      "root": "libs/common",
       "entryFile": "index",
-      "sourceRoot": "common/src",
+      "sourceRoot": "libs/common/src",
       "compilerOptions": {
-        "tsConfigPath": "common/tsconfig.lib.json"
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     }
   }
