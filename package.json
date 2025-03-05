@@ -1,0 +1,29 @@
+{
+  "name": "nescord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pack:rest": "cd ./apps/rest && npm run pack",
+    "build:rest-proto": "npx proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=./apps/rest/src/proto/ ./apps/rest/src/proto/nescord-rest.proto -y"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaga-live/nescord.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jaga-live/nescord/issues"
+  },
+  "homepage": "https://github.com/jaga-live/nescord#readme",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.12.6",
+    "@grpc/proto-loader": "^0.7.13",
+    "@types/node": "^22.13.9",
+    "inversify": "^7.0.1",
+    "reflect-metadata": "^0.2.2"
+  }
+}
