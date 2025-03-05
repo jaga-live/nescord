@@ -1,0 +1,18 @@
+{
+  "name": "@nescord/rest",
+  "version": "1.0.0",
+  "description": "REST handler for Nescord",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "start": "nest start",
+    "build": "tsc -p tsconfig.app.json",
+    "copy:proto": "cp -r ../../proto lib/",
+    "pack": "npm run build && npm run copy:proto && npm pack"
+  },
+  "author": "",
+  "license": "ISC"
+}

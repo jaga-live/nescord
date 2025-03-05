@@ -34,6 +34,17 @@
         "watchAssets": true
       }
     },
+    "rest": {
+      "type": "application",
+      "root": "apps/rest",
+      "entryFile": "main",
+      "sourceRoot": "apps/rest/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/rest/tsconfig.app.json",
+        "assets": ["**/*.proto"],
+        "watchAssets": true
+      }
+    },
     "common": {
       "type": "library",
       "root": "libs/common",

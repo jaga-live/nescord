@@ -20,7 +20,11 @@
     "test:e2e": "jest --config ./apps/nescord/test/jest-e2e.json",
     "build:core": "cd apps/core && npm run build",
     "build:ws": "cd apps/ws && npm run build",
-    "copy:proto": "cp -r proto dist/"
+    "build:rest": "cd apps/rest && npm run build",
+    "copy:proto": "cp -r proto dist/",
+    "pack:core": "cd apps/core && npm run pack",
+    "pack:ws": "cd apps/ws && npm run pack",
+    "pack:rest": "cd apps/rest && npm run pack"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.12.5",
