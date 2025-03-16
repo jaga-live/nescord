@@ -9,8 +9,9 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 
 export interface ProtoGrpcType {
   nescordRestClient: {
-    HttpRequest: MessageTypeDefinition
-    HttpResponse: MessageTypeDefinition
+    QueryDto: MessageTypeDefinition
+    RequestDto: MessageTypeDefinition
+    ResponseDto: MessageTypeDefinition
     RestService: SubtypeConstructor<typeof grpc.Client, _nescordRestClient_RestServiceClient> & { service: _nescordRestClient_RestServiceDefinition }
   }
 }

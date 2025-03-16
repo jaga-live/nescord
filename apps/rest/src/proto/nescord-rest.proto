@@ -2,17 +2,23 @@ syntax = "proto3";
 package nescordRestClient;
 
 service RestService {
-  rpc call(HttpRequest) returns (HttpResponse);
+  rpc call(RequestDto) returns (ResponseDto);
 }
 
-// Standard HTTP Request message
-message HttpRequest {
-  string method = 1;
-  string url = 2;
+message RequestDto {
+  string action = 1;
+  QueryDto query = 2;
   string body = 3;
 }
 
-// Standard HTTP Response message
-message HttpResponse {
-  string body = 1;
+message ResponseDto {
+  string data = 1;
+}
+
+message QueryDto {
+  string guildId = 1;
+  string memberId = 2;
+  string channelId = 3;
+  string messageId = 4;
+  string roleId = 5;
 }

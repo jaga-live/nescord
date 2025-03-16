@@ -17,8 +17,8 @@ export class RestGrpcController implements RestServiceHandlers {
 
   async call(call: ServerUnaryCall<any, any>, callback: sendUnaryData<any>) {
     const { request } = call;
-    const res = await this.discordRest.getMember(request.guildId, request.userId)
+    const res = await this.discordRest.getMember(request.query.guildId, request.query.memberId)
 
-    callback(null, { body: res });
+    callback(null, { data: JSON.stringify(res) });
   }
 }

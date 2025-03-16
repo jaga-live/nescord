@@ -2,22 +2,22 @@
 
 import type * as grpc from '@grpc/grpc-js'
 import type { MethodDefinition } from '@grpc/proto-loader'
-import type { HttpRequest as _nescordRestClient_HttpRequest, HttpRequest__Output as _nescordRestClient_HttpRequest__Output } from '../nescordRestClient/HttpRequest';
-import type { HttpResponse as _nescordRestClient_HttpResponse, HttpResponse__Output as _nescordRestClient_HttpResponse__Output } from '../nescordRestClient/HttpResponse';
+import type { RequestDto as _nescordRestClient_RequestDto, RequestDto__Output as _nescordRestClient_RequestDto__Output } from '../nescordRestClient/RequestDto';
+import type { ResponseDto as _nescordRestClient_ResponseDto, ResponseDto__Output as _nescordRestClient_ResponseDto__Output } from '../nescordRestClient/ResponseDto';
 
 export interface RestServiceClient extends grpc.Client {
-  call(argument: _nescordRestClient_HttpRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_nescordRestClient_HttpResponse__Output>): grpc.ClientUnaryCall;
-  call(argument: _nescordRestClient_HttpRequest, metadata: grpc.Metadata, callback: grpc.requestCallback<_nescordRestClient_HttpResponse__Output>): grpc.ClientUnaryCall;
-  call(argument: _nescordRestClient_HttpRequest, options: grpc.CallOptions, callback: grpc.requestCallback<_nescordRestClient_HttpResponse__Output>): grpc.ClientUnaryCall;
-  call(argument: _nescordRestClient_HttpRequest, callback: grpc.requestCallback<_nescordRestClient_HttpResponse__Output>): grpc.ClientUnaryCall;
+  call(argument: _nescordRestClient_RequestDto, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_nescordRestClient_ResponseDto__Output>): grpc.ClientUnaryCall;
+  call(argument: _nescordRestClient_RequestDto, metadata: grpc.Metadata, callback: grpc.requestCallback<_nescordRestClient_ResponseDto__Output>): grpc.ClientUnaryCall;
+  call(argument: _nescordRestClient_RequestDto, options: grpc.CallOptions, callback: grpc.requestCallback<_nescordRestClient_ResponseDto__Output>): grpc.ClientUnaryCall;
+  call(argument: _nescordRestClient_RequestDto, callback: grpc.requestCallback<_nescordRestClient_ResponseDto__Output>): grpc.ClientUnaryCall;
   
 }
 
 export interface RestServiceHandlers extends grpc.UntypedServiceImplementation {
-  call: grpc.handleUnaryCall<_nescordRestClient_HttpRequest__Output, _nescordRestClient_HttpResponse>;
+  call: grpc.handleUnaryCall<_nescordRestClient_RequestDto__Output, _nescordRestClient_ResponseDto>;
   
 }
 
 export interface RestServiceDefinition extends grpc.ServiceDefinition {
-  call: MethodDefinition<_nescordRestClient_HttpRequest, _nescordRestClient_HttpResponse, _nescordRestClient_HttpRequest__Output, _nescordRestClient_HttpResponse__Output>
+  call: MethodDefinition<_nescordRestClient_RequestDto, _nescordRestClient_ResponseDto, _nescordRestClient_RequestDto__Output, _nescordRestClient_ResponseDto__Output>
 }
