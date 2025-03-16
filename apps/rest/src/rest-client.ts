@@ -1,15 +1,15 @@
 import { join } from "path";
-import { RestHandlerOptions } from "./interface/rest-handler.interface";
+import { RestClientOptions } from "./interface/rest-client.interface";
 import { loadSync } from "@grpc/proto-loader";
 import * as grpc from "@grpc/grpc-js";
 import { RestServiceClient } from "./proto/nescordRestClient/RestService";
 import { ProtoGrpcType } from "./proto/nescord-rest";
 
-export class RestHandler {
-  private options: RestHandlerOptions;
+export class RestClient {
+  private options: RestClientOptions;
   private grpcClient: RestServiceClient;
 
-  constructor(options: RestHandlerOptions) {
+  constructor(options: RestClientOptions) {
     this.options = options;
     this.initializeGrpcClient();
   }

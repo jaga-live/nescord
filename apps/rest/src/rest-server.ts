@@ -1,15 +1,14 @@
 import { loadSync } from "@grpc/proto-loader";
-import { RestListenerOptions } from "./interface/rest-listener.interface";
+import { RestServerOptions } from "./interface/rest-server.interface";
 import { join } from "path";
 import * as grpc from "@grpc/grpc-js";
 import { ProtoGrpcType } from "./proto/nescord-rest";
-import { RestHandlerService } from "./service/rest-handler.service";
 import { RestGrpcController } from "./controllers/rest-grpc.controller";
 
-export class RestListener {
-  private options: RestListenerOptions;
+export class RestServer {
+  private options: RestServerOptions;
 
-  constructor(options: RestListenerOptions) {
+  constructor(options: RestServerOptions) {
     this.options = options;
     this.initializeGrpcServer();
   }
@@ -22,7 +21,7 @@ export class RestListener {
       packageDefinition
     ) as unknown as ProtoGrpcType;
     const grpcServer = new grpc.Server();
-    const grpcController = new RestGrpcController();
+    const grpcController = new RestGrpcController(this.options);
 
     grpcServer.addService(
       proto.nescordRestClient.RestService.service,
