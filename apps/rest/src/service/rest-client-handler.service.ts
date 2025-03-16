@@ -1,7 +1,6 @@
-import { injectable } from "inversify";
-
+import { injectable } from 'inversify';
 
 @injectable()
 export class RestClientHandlerService {
-    constructor() { }
+  constructor() {}
 }

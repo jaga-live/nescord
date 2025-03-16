@@ -1,2 +1,2 @@
-export * from "./rest-client";
-export * from "./rest-server";
+export * from './rest-client';
+export * from './rest-server';
