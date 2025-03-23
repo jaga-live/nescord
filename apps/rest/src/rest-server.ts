@@ -4,6 +4,8 @@ import { join } from 'path';
 import * as grpc from '@grpc/grpc-js';
 import { ProtoGrpcType } from './proto/nescord-rest';
 import { RestGrpcController } from './controllers/rest-grpc.controller';
+import { RestService } from './service/rest.service';
+import { CacheService } from './service/server/cache.service';
 
 export class RestServer {
   private options: RestServerOptions;
@@ -11,6 +13,9 @@ export class RestServer {
   constructor(options: RestServerOptions) {
     this.options = options;
     this.initializeGrpcServer();
+
+    RestService.initialize(this.options);
+    CacheService.initialize(this.options);
   }
 
   private async initializeGrpcServer() {
@@ -37,7 +42,7 @@ export class RestServer {
 
           return;
         }
-        grpcServer.start();
+
         console.log(`gRPC server started on ${this.options.gRPCHost}`);
       },
     );

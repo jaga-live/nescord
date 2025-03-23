@@ -6,9 +6,13 @@ service RestService {
 }
 
 message RequestDto {
-  string action = 1;
-  QueryDto query = 2;
-  string body = 3;
+  string resource = 1;
+  string action = 2;
+  string method = 3;
+  QueryDto query = 4;
+  string body = 5;
+  string format = 6;
+  bool ignoreCache = 7;
 }
 
 message ResponseDto {

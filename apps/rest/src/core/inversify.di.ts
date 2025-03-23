@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { RestClientHandlerService } from '../service/rest-client-handler.service';
+import { ResourceHandlerService } from '../service/server/resource-handler.service';
 import { DI_TYPES } from './di.types';
 
 const container = new Container({
@@ -7,7 +7,7 @@ const container = new Container({
 });
 
 container
-  .bind<RestClientHandlerService>(DI_TYPES.RestClientHandlerService)
-  .to(RestClientHandlerService);
+  .bind<ResourceHandlerService>(DI_TYPES.RestClientHandlerService)
+  .to(ResourceHandlerService);
 
 export default container;
