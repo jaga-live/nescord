@@ -1,9 +1,8 @@
-import { RequestOptions } from 'http';
 import { RestClientOptions } from '../../interface/rest-client.interface';
 import { GrpcClient } from '../../microservice/gRPC';
 import { RestServiceClient } from '../../proto/nescordRestClient/RestService';
 
-export class MemberService {
+export class MessageService {
   private options: RestClientOptions;
   private grpcClient: RestServiceClient;
 
@@ -12,30 +11,8 @@ export class MemberService {
     this.grpcClient = new GrpcClient().set(this.options);
   }
 
-  async get(guildId: string, memberId: string, options?: RequestOptions) {
-    return new Promise<string>((resolve, reject) => {
-      this.grpcClient.call(
-        {
-          resource: 'member',
-          action: 'getMember',
-          query: { guildId, memberId },
-          ...options,
-        },
-        (err, res) => {
-          if (err) {
-            reject(err);
-          }
-
-          const data = res.data ? JSON.parse(res.data) : null;
-
-          resolve(data);
-        },
-      );
-    });
-  }
-
   async sendMessage(channelId: string, content: string) {
-    return new Promise<string>(() => {
+    return new Promise<void>(() => {
       this.grpcClient.call(
         {
           resource: 'message',
