@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "pack:rest": "cd ./apps/rest && npm run pack",
-    "build:rest-proto": "npx proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=./apps/rest/src/proto/ ./apps/rest/src/proto/nescord-rest.proto -y"
+    "pack:ws": "cd ./apps/ws && npm run pack",
+    "build:rest-proto": "npx proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=./apps/rest/src/proto/ ./apps/rest/src/proto/nescord-rest.proto -y",
+    "build:ws-proto": "npx proto-loader-gen-types --grpcLib=@grpc/grpc-js --outDir=./apps/ws/src/proto/ ./apps/ws/src/proto/ws.proto -y"
   },
   "repository": {
     "type": "git",
