@@ -1,4 +1,8 @@
+import { IntentsBitField } from 'discord.js';
+
 export interface WsClientOptions {
+  token: string;
   gRPCHost: string;
-  shards: number | string;
+  intents: IntentsBitField[];
+  shardsPerCluster?: number;
 }

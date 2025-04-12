@@ -23,6 +23,8 @@
     "@grpc/grpc-js": "^1.12.6",
     "@grpc/proto-loader": "^0.7.13",
     "@types/node": "^22.13.9",
+    "discord-hybrid-sharding": "^2.2.6",
+    "discord.js": "^14.18.0",
     "reflect-metadata": "^0.2.2"
   }
 }
