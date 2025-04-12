@@ -1,0 +1,218 @@
+syntax = "proto3";
+package ws;
+
+service EventsService{
+  rpc messageCreate (GuildMessage) returns (NoResponse);
+  rpc messageUpdate (GuildMessageUpdate) returns (NoResponse);
+  rpc messageDelete (GuildMessage) returns (NoResponse);
+  rpc messageReactionAdd (GuildMessageReactionAdd) returns (NoResponse);
+  rpc guildMemberAdd (GuildMember) returns (NoResponse);
+  rpc guildMemberUpdate (GuildMemberUpadte) returns (NoResponse);
+  rpc channelCreate (GuildChannel) returns (NoResponse);
+  rpc channelUpdate (GuildChannelUpdate) returns (NoResponse);
+  rpc channelDelete (GuildChannel) returns (NoResponse);
+  rpc guildCreate (Guild) returns (NoResponse);
+  rpc guildUpdate (GuildUpdate) returns (NoResponse);
+  rpc roleCreate (GuildRole) returns (NoResponse);
+  rpc roleUpdate (GuildRoleUpdate) returns (NoResponse);
+}
+
+/** Shared **/
+message NoResponse { }
+
+message IdName {
+  string id = 1;
+  string name = 2;
+}
+
+message Guild {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string icon = 4;
+  repeated string features = 5;
+  int64 joined_timestamp = 6;
+  int64 maximum_members = 7;
+  string rules_channel_id = 8;
+  string public_updates_channel_id = 9;
+  string preferred_locale =  10;
+  string owner_id =  11;
+  int64 member_count = 12;
+  int32 channel_count = 13;
+  int32 verification_level = 14;
+  int32 premium_tier = 15;
+  int32 mfa_level = 16;
+  string afk_channel_id = 17;
+  int32 afk_timeout = 18;
+  string system_channel_id = 19;
+  int32 system_channel_flags = 20;
+  int32 default_message_notifications = 21;
+  int32 explicit_content_filter = 22;
+  bool premium_progress_bar_enabled = 23;
+  string created_at = 24;
+}
+
+/** Message **/
+message GuildMessage {
+  string id = 1;
+  string guildId = 2;
+  string channelId = 3;
+  GuildMember author = 4;
+  string content = 5;
+  MessageMention mentions = 6;
+  repeated MessageAttachment attachments = 7;
+  MessageReference reference = 8;
+  string createdAt = 9;
+  GuildChannel channel = 10;
+  Guild guild = 11;
+}
+
+message GuildMessageUpdate {
+  GuildMessage oldMessage = 1;
+  GuildMessage newMessage = 2;
+}
+
+message GuildMessageReactionAdd{
+  string id = 1;
+  string guildId = 2;
+  string channelId = 3;
+  GuildMember author = 4;
+  string content = 5;
+  MessageMention mentions = 6;
+  repeated MessageAttachment attachments = 7;
+  string createdAt = 8;
+  GuildChannel channel = 9;
+  Guild guild = 10;
+  GuildEmoji emoji = 11;
+  repeated GuildEmoji reactions = 12;
+}
+
+message MessageReference {
+  string guildId = 1;
+  string channelId = 2;
+  string messageId = 3;
+}
+
+message GuildEmoji{
+  string id = 1;
+  string name = 2;
+  bool animated = 3;
+  string imageURL = 4;
+  string createdAt = 5;
+  GuildUser user = 6;
+}
+
+message MessageAuthor {
+  string id = 1;
+  bool bot = 2;
+  bool system = 3;
+  string username = 4;
+  string globalName = 5;
+  string avatar = 6;
+}
+
+message MessageMention {
+  bool everyone = 1;
+  repeated MessageAuthor users = 2;
+}
+
+message MessageAttachment{
+  string name = 1;
+  string id = 2;
+  int32 size = 3;
+  string url = 4;
+  string proxyURL = 5;
+  int32 height = 6;
+  int32 width = 7;
+  string contentType = 8;
+  string description = 9;
+}
+
+/** Member **/
+message GuildMember {
+  string id = 1;
+  string username = 2;
+  string guildId = 3;
+  string displayName = 4;
+  string globalName = 5;
+  string avatar = 6;
+  string accent = 7;
+  bool bot = 8;
+  bool system = 9;
+  repeated GuildRole roles = 10;
+  repeated string permissions = 11;
+  string joinedAt = 12;
+  string createdAt = 13;
+  bool pending = 14;
+  Guild guild = 15;
+}
+
+message GuildMemberUpadte {
+  GuildMember oldMember = 1;
+  GuildMember newMember = 2;
+}
+
+/** User **/
+message GuildUser {
+  string id = 1;
+  string username = 2;
+  string globalName = 3;
+  string avatar = 4;
+  string banner = 5;
+  string bot = 6;
+  string system = 7;
+}
+
+/** Channel **/
+message GuildChannel {
+  string id = 1;
+  string name = 2;
+  string guildId = 3;
+  IdName parent = 4;
+  string topic = 5;
+  int32 position = 6;
+  string lastMessageId = 7;
+  bool nsfw = 8;
+  int32 rateLimitPerUser = 9;
+  int32 type = 10;
+  int64 bitrate = 11;
+  repeated ChannelPermissionOverwrites permissionOverwrites = 12;
+  Guild guild = 13;
+}
+
+message GuildChannelUpdate {
+  GuildChannel oldChannel = 1;
+  GuildChannel newChannel = 2;
+}
+
+message ChannelPermissionOverwrites {
+  string id = 1;
+  int32 type =2;
+}
+
+/** Guild **/
+message GuildUpdate {
+  Guild oldGuild = 1;
+  Guild newGuild = 2;
+}
+
+/** Role **/
+message GuildRole {
+  string id = 1;
+  string name = 2;
+  string guildId = 4;
+  int32 color = 5;
+  string permissions = 6;
+  int32 position = 7;
+  bool managed = 8;
+  bool mentionable = 9;
+  string flags = 10;
+  string icon = 11;
+  bool hoist = 12;
+  string createdAt = 13;
+}
+
+message GuildRoleUpdate {
+  GuildRole oldRole = 1;
+  GuildRole newRole = 2;
+}
