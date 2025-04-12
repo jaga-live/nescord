@@ -7,7 +7,7 @@ import { WsClientOptions } from '../interface/ws-client-options.interface';
 
 export class GrpcClient {
   private static instance: GrpcClient;
-  private grpcClient: EventsServiceClient;
+  public grpcClient: EventsServiceClient;
 
   private constructor(options: WsClientOptions) {
     this.grpcClient = this.set(options);
