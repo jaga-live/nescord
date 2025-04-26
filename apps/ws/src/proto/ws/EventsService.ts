@@ -66,6 +66,11 @@ export interface EventsServiceClient extends grpc.Client {
   messageReactionAdd(argument: _ws_GuildMessageReactionAdd, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   messageReactionAdd(argument: _ws_GuildMessageReactionAdd, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   
+  messageReactionRemove(argument: _ws_GuildMessageReactionAdd, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  messageReactionRemove(argument: _ws_GuildMessageReactionAdd, metadata: grpc.Metadata, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  messageReactionRemove(argument: _ws_GuildMessageReactionAdd, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  messageReactionRemove(argument: _ws_GuildMessageReactionAdd, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  
   messageUpdate(argument: _ws_GuildMessageUpdate, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   messageUpdate(argument: _ws_GuildMessageUpdate, metadata: grpc.Metadata, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   messageUpdate(argument: _ws_GuildMessageUpdate, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
@@ -75,6 +80,11 @@ export interface EventsServiceClient extends grpc.Client {
   roleCreate(argument: _ws_GuildRole, metadata: grpc.Metadata, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   roleCreate(argument: _ws_GuildRole, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   roleCreate(argument: _ws_GuildRole, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  
+  roleDelete(argument: _ws_GuildRole, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  roleDelete(argument: _ws_GuildRole, metadata: grpc.Metadata, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  roleDelete(argument: _ws_GuildRole, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  roleDelete(argument: _ws_GuildRole, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   
   roleUpdate(argument: _ws_GuildRoleUpdate, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   roleUpdate(argument: _ws_GuildRoleUpdate, metadata: grpc.Metadata, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
@@ -104,9 +114,13 @@ export interface EventsServiceHandlers extends grpc.UntypedServiceImplementation
   
   messageReactionAdd: grpc.handleUnaryCall<_ws_GuildMessageReactionAdd__Output, _ws_NoResponse>;
   
+  messageReactionRemove: grpc.handleUnaryCall<_ws_GuildMessageReactionAdd__Output, _ws_NoResponse>;
+  
   messageUpdate: grpc.handleUnaryCall<_ws_GuildMessageUpdate__Output, _ws_NoResponse>;
   
   roleCreate: grpc.handleUnaryCall<_ws_GuildRole__Output, _ws_NoResponse>;
+  
+  roleDelete: grpc.handleUnaryCall<_ws_GuildRole__Output, _ws_NoResponse>;
   
   roleUpdate: grpc.handleUnaryCall<_ws_GuildRoleUpdate__Output, _ws_NoResponse>;
   
@@ -123,7 +137,9 @@ export interface EventsServiceDefinition extends grpc.ServiceDefinition {
   messageCreate: MethodDefinition<_ws_GuildMessage, _ws_NoResponse, _ws_GuildMessage__Output, _ws_NoResponse__Output>
   messageDelete: MethodDefinition<_ws_GuildMessage, _ws_NoResponse, _ws_GuildMessage__Output, _ws_NoResponse__Output>
   messageReactionAdd: MethodDefinition<_ws_GuildMessageReactionAdd, _ws_NoResponse, _ws_GuildMessageReactionAdd__Output, _ws_NoResponse__Output>
+  messageReactionRemove: MethodDefinition<_ws_GuildMessageReactionAdd, _ws_NoResponse, _ws_GuildMessageReactionAdd__Output, _ws_NoResponse__Output>
   messageUpdate: MethodDefinition<_ws_GuildMessageUpdate, _ws_NoResponse, _ws_GuildMessageUpdate__Output, _ws_NoResponse__Output>
   roleCreate: MethodDefinition<_ws_GuildRole, _ws_NoResponse, _ws_GuildRole__Output, _ws_NoResponse__Output>
+  roleDelete: MethodDefinition<_ws_GuildRole, _ws_NoResponse, _ws_GuildRole__Output, _ws_NoResponse__Output>
   roleUpdate: MethodDefinition<_ws_GuildRoleUpdate, _ws_NoResponse, _ws_GuildRoleUpdate__Output, _ws_NoResponse__Output>
 }

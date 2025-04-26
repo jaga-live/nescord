@@ -1,8 +1,19 @@
 import { ClusterClient, getInfo } from 'discord-hybrid-sharding';
-import { Client } from 'discord.js';
+import { Client, TextChannel } from 'discord.js';
 import { WsClientOptions } from './interface/ws-client-options.interface';
-import { GuildMessageDto } from './dto/guild-message.dto';
+import {
+  GuildMessageDto,
+  GuildMessageReactionDto,
+  GuildMessageUpdateDto,
+} from './dto/guild-message.dto';
 import { GrpcClient } from './microservice/gRPC';
+import { GuildMemberDto, GuildMemberUpdateDto } from './dto/guild-member.dto';
+import {
+  GuildChannelDto,
+  GuildChannelUpdateDto,
+} from './dto/guild-channel.dto';
+import { GuildDto, GuildUpdateDto } from './dto/guild.dto';
+import { GuildRoleDto, GuildRoleUpdateDto } from './dto/guild-role.dto';
 
 const options: WsClientOptions = JSON.parse(process.env.discordOptions);
 const discordClient = new Client({
@@ -25,78 +36,151 @@ discordClient.once('ready', () => {
 discordClient.on('messageCreate', async (message) => {
   const guildMessage = new GuildMessageDto(message);
 
-  console.log('Emit');
   await new Promise<void>(() => {
-    eventsGrpcService.messageCreate(guildMessage as unknown, (error) => {});
+    eventsGrpcService.messageCreate(guildMessage as unknown, () => {});
   });
 });
 
-// /**Message Update */
-// discordClient.on("
-//   'messageUpdate',
-//   (oldMessage: Message, newMessage: Message) => {
-//     eventsHandlerService.messageUpdate(oldMessage, newMessage);
-//   },
-// );
+/**Message Update */
+discordClient.on('messageUpdate', async (oldMessage: any, newMessage) => {
+  const guildMessageUpdate = new GuildMessageUpdateDto(oldMessage, newMessage);
 
-// /**Message Delete */
-// discordClient.on('messageDelete', (message) => {
-//   eventsHandlerService.messageDelete(message);
-// });
+  await new Promise<void>(() => {
+    eventsGrpcService.messageUpdate(guildMessageUpdate as unknown, () => {});
+  });
+});
 
-// /**Message Reaction add */
-// discordClient.on('messageReactionAdd', (message, member) => {
-//   eventsHandlerService.messageReactionAdd(message, member);
-// });
+/**Message Delete */
+discordClient.on('messageDelete', async (message: any) => {
+  const guildMessage = new GuildMessageDto(message);
 
-// /**Member Add */
-// discordClient.on('guildMemberAdd', (member) => {
-//   eventsHandlerService.memberAdd(member);
-// });
+  await new Promise<void>(() => {
+    eventsGrpcService.messageDelete(guildMessage as unknown, () => {});
+  });
+});
 
-// /**Member Update */
-// discordClient.on('guildMemberUpdate', (oldMember, newMember) => {
-//   eventsHandlerService.memberUpdate(oldMember, newMember);
-// });
+/**Message Reaction add */
+discordClient.on('messageReactionAdd', async (message: any, member: any) => {
+  const guildMessageReaction = new GuildMessageReactionDto(message, member);
 
-// /**Channel Create */
-// discordClient.on('channelCreate', (channel: TextChannel) => {
-//   eventsHandlerService.channelCreate(channel);
-// });
+  await new Promise<void>(() => {
+    eventsGrpcService.messageReactionAdd(
+      guildMessageReaction as unknown,
+      () => {},
+    );
+  });
+});
 
-// /**Channel Update */
-// discordClient.on(
-//   'channelUpdate',
-//   (oldChannel: TextChannel, newChannel: TextChannel) => {
-//     eventsHandlerService.channelUpdate(oldChannel, newChannel);
-//   },
-// );
+/**Message Reaction Remove */
+discordClient.on('messageReactionRemove', async (message: any, member: any) => {
+  const guildMessageReaction = new GuildMessageReactionDto(message, member);
 
-// /**Channel Delete */
-// discordClient.on('channelDelete', (channel: TextChannel) => {
-//   eventsHandlerService.channelDelete(channel);
-// });
+  await new Promise<void>(() => {
+    eventsGrpcService.messageReactionRemove(
+      guildMessageReaction as unknown,
+      () => {},
+    );
+  });
+});
 
-// /**Guild Create */
-// discordClient.on('guildCreate', (guild) => {
-//   eventsHandlerService.guildCreate(guild);
-// });
+/**Member Add */
+discordClient.on('guildMemberAdd', async (member: any) => {
+  const guildMember = new GuildMemberDto(member);
 
-// /**Guild Update */
-// discordClient.on('guildUpdate', (oldGuild, newGuild) => {
-//   eventsHandlerService.guildUpdate(oldGuild, newGuild);
-// });
+  await new Promise<void>(() => {
+    eventsGrpcService.guildMemberAdd(guildMember as unknown, () => {});
+  });
+});
 
-// /**Guild Role Create */
-// discordClient.on('roleCreate', (role) => {
-//   eventsHandlerService.roleCreate(role);
-// });
+/**Member Update */
+discordClient.on(
+  'guildMemberUpdate',
+  async (oldMember: any, newMember: any) => {
+    const guildMemberUpdate = new GuildMemberUpdateDto(oldMember, newMember);
 
-// /**Guild Role Update */
-// discordClient.on('roleUpdate', (oldRole, newRole) => {
-//   eventsHandlerService.roleUpdate(oldRole, newRole);
-// });
+    await new Promise<void>(() => {
+      eventsGrpcService.guildMemberUpdate(
+        guildMemberUpdate as unknown,
+        () => {},
+      );
+    });
+  },
+);
 
-function handleGrpcErr(error: any) {
-  console.error('Error: ', error.message);
-}
+/**Channel Create */
+discordClient.on('channelCreate', async (channel: TextChannel) => {
+  const guildChannel = new GuildChannelDto(channel);
+
+  await new Promise<void>(() => {
+    eventsGrpcService.channelCreate(guildChannel as unknown, () => {});
+  });
+});
+
+/**Channel Update */
+discordClient.on(
+  'channelUpdate',
+  async (oldChannel: TextChannel, newChannel: TextChannel) => {
+    const guildChannelUpdate = new GuildChannelUpdateDto(
+      oldChannel,
+      newChannel,
+    );
+
+    await new Promise<void>(() => {
+      eventsGrpcService.channelUpdate(guildChannelUpdate as unknown, () => {});
+    });
+  },
+);
+
+/**Channel Delete */
+discordClient.on('channelDelete', async (channel: TextChannel) => {
+  const guildChannel = new GuildChannelDto(channel);
+
+  await new Promise<void>(() => {
+    eventsGrpcService.channelDelete(guildChannel as unknown, () => {});
+  });
+});
+
+/**Guild Create */
+discordClient.on('guildCreate', async (guild) => {
+  const guildDto = new GuildDto(guild);
+
+  await new Promise<void>(() => {
+    eventsGrpcService.guildCreate(guildDto as unknown, () => {});
+  });
+});
+
+/**Guild Update */
+discordClient.on('guildUpdate', async (oldGuild, newGuild) => {
+  const guildDto = new GuildUpdateDto(oldGuild, newGuild);
+
+  await new Promise<void>(() => {
+    eventsGrpcService.guildUpdate(guildDto as unknown, () => {});
+  });
+});
+
+/**Guild Role Create */
+discordClient.on('roleCreate', async (role) => {
+  const guildRoleDto = new GuildRoleDto(role);
+
+  await new Promise<void>(() => {
+    eventsGrpcService.roleCreate(guildRoleDto as unknown, () => {});
+  });
+});
+
+/**Guild Role Update */
+discordClient.on('roleUpdate', async (oldRole, newRole) => {
+  const guildRoleDto = new GuildRoleUpdateDto(oldRole, newRole);
+
+  await new Promise<void>(() => {
+    eventsGrpcService.roleUpdate(guildRoleDto as unknown, () => {});
+  });
+});
+
+/**Guild Role Delete */
+discordClient.on('roleDelete', async (role) => {
+  const guildRoleDto = new GuildRoleDto(role);
+
+  await new Promise<void>(() => {
+    eventsGrpcService.roleDelete(guildRoleDto as unknown, () => {});
+  });
+});
