@@ -1,0 +1,17 @@
+export enum EventType {
+  MessageCreate = 'messageCreate',
+  MessageUpdate = 'messageUpdate',
+  MessageDelete = 'messageDelete',
+  MessageReactionAdd = 'messageReactionAdd',
+  MessageReactionRemove = 'messageReactionRemove',
+  GuildMemberAdd = 'guildMemberAdd',
+  GuildMemberUpdate = 'guildMemberUpdate',
+  ChannelCreate = 'channelCreate',
+  ChannelUpdate = 'channelUpdate',
+  ChannelDelete = 'channelDelete',
+  GuildCreate = 'guildCreate',
+  GuildUpdate = 'guildUpdate',
+  RoleCreate = 'roleCreate',
+  RoleUpdate = 'roleUpdate',
+  RoleDelete = 'roleDelete',
+}

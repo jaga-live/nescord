@@ -1,5 +1,5 @@
 import { ClusterClient, getInfo } from 'discord-hybrid-sharding';
-import { Client, TextChannel } from 'discord.js';
+import { Client, ClientEvents, TextChannel } from 'discord.js';
 import { WsClientOptions } from './interface/ws-client-options.interface';
 import {
   GuildMessageDto,
@@ -14,6 +14,7 @@ import {
 } from './dto/guild-channel.dto';
 import { GuildDto, GuildUpdateDto } from './dto/guild.dto';
 import { GuildRoleDto, GuildRoleUpdateDto } from './dto/guild-role.dto';
+import { EventType } from './enum/event-type.enum';
 
 const options: WsClientOptions = JSON.parse(process.env.discordOptions);
 const discordClient = new Client({
@@ -31,9 +32,25 @@ discordClient.once('ready', () => {
 });
 
 /**Discord Websocket Events */
+function registerEvent<K extends keyof ClientEvents>(
+  event: K,
+  handler: (...args: ClientEvents[K]) => void,
+) {
+  const defaultEvents = [EventType.MessageCreate, EventType.GuildCreate];
+
+  if (options.events === '*') {
+    discordClient.on(event, handler);
+  } else if (!options.events?.length) {
+    if (defaultEvents.includes(event as EventType)) {
+      discordClient.on(event, handler);
+    }
+  } else if (options.events?.includes(event as EventType)) {
+    discordClient.on(event, handler);
+  }
+}
 
 /**Message Create */
-discordClient.on('messageCreate', async (message) => {
+registerEvent(EventType.MessageCreate, async (message) => {
   const guildMessage = new GuildMessageDto(message);
 
   await new Promise<void>(() => {
@@ -42,7 +59,7 @@ discordClient.on('messageCreate', async (message) => {
 });
 
 /**Message Update */
-discordClient.on('messageUpdate', async (oldMessage: any, newMessage) => {
+registerEvent(EventType.MessageUpdate, async (oldMessage: any, newMessage) => {
   const guildMessageUpdate = new GuildMessageUpdateDto(oldMessage, newMessage);
 
   await new Promise<void>(() => {
@@ -51,7 +68,7 @@ discordClient.on('messageUpdate', async (oldMessage: any, newMessage) => {
 });
 
 /**Message Delete */
-discordClient.on('messageDelete', async (message: any) => {
+registerEvent(EventType.MessageDelete, async (message: any) => {
   const guildMessage = new GuildMessageDto(message);
 
   await new Promise<void>(() => {
@@ -60,31 +77,37 @@ discordClient.on('messageDelete', async (message: any) => {
 });
 
 /**Message Reaction add */
-discordClient.on('messageReactionAdd', async (message: any, member: any) => {
-  const guildMessageReaction = new GuildMessageReactionDto(message, member);
+registerEvent(
+  EventType.MessageReactionAdd,
+  async (message: any, member: any) => {
+    const guildMessageReaction = new GuildMessageReactionDto(message, member);
 
-  await new Promise<void>(() => {
-    eventsGrpcService.messageReactionAdd(
-      guildMessageReaction as unknown,
-      () => {},
-    );
-  });
-});
+    await new Promise<void>(() => {
+      eventsGrpcService.messageReactionAdd(
+        guildMessageReaction as unknown,
+        () => {},
+      );
+    });
+  },
+);
 
 /**Message Reaction Remove */
-discordClient.on('messageReactionRemove', async (message: any, member: any) => {
-  const guildMessageReaction = new GuildMessageReactionDto(message, member);
+registerEvent(
+  EventType.MessageReactionRemove,
+  async (message: any, member: any) => {
+    const guildMessageReaction = new GuildMessageReactionDto(message, member);
 
-  await new Promise<void>(() => {
-    eventsGrpcService.messageReactionRemove(
-      guildMessageReaction as unknown,
-      () => {},
-    );
-  });
-});
+    await new Promise<void>(() => {
+      eventsGrpcService.messageReactionRemove(
+        guildMessageReaction as unknown,
+        () => {},
+      );
+    });
+  },
+);
 
 /**Member Add */
-discordClient.on('guildMemberAdd', async (member: any) => {
+registerEvent(EventType.GuildMemberAdd, async (member: any) => {
   const guildMember = new GuildMemberDto(member);
 
   await new Promise<void>(() => {
@@ -93,8 +116,8 @@ discordClient.on('guildMemberAdd', async (member: any) => {
 });
 
 /**Member Update */
-discordClient.on(
-  'guildMemberUpdate',
+registerEvent(
+  EventType.GuildMemberUpdate,
   async (oldMember: any, newMember: any) => {
     const guildMemberUpdate = new GuildMemberUpdateDto(oldMember, newMember);
 
@@ -108,7 +131,7 @@ discordClient.on(
 );
 
 /**Channel Create */
-discordClient.on('channelCreate', async (channel: TextChannel) => {
+registerEvent(EventType.ChannelCreate, async (channel: TextChannel) => {
   const guildChannel = new GuildChannelDto(channel);
 
   await new Promise<void>(() => {
@@ -117,8 +140,8 @@ discordClient.on('channelCreate', async (channel: TextChannel) => {
 });
 
 /**Channel Update */
-discordClient.on(
-  'channelUpdate',
+registerEvent(
+  EventType.ChannelUpdate,
   async (oldChannel: TextChannel, newChannel: TextChannel) => {
     const guildChannelUpdate = new GuildChannelUpdateDto(
       oldChannel,
@@ -132,7 +155,7 @@ discordClient.on(
 );
 
 /**Channel Delete */
-discordClient.on('channelDelete', async (channel: TextChannel) => {
+registerEvent(EventType.ChannelDelete, async (channel: TextChannel) => {
   const guildChannel = new GuildChannelDto(channel);
 
   await new Promise<void>(() => {
@@ -141,7 +164,7 @@ discordClient.on('channelDelete', async (channel: TextChannel) => {
 });
 
 /**Guild Create */
-discordClient.on('guildCreate', async (guild) => {
+registerEvent(EventType.GuildCreate, async (guild) => {
   const guildDto = new GuildDto(guild);
 
   await new Promise<void>(() => {
@@ -150,7 +173,7 @@ discordClient.on('guildCreate', async (guild) => {
 });
 
 /**Guild Update */
-discordClient.on('guildUpdate', async (oldGuild, newGuild) => {
+registerEvent(EventType.GuildUpdate, async (oldGuild, newGuild) => {
   const guildDto = new GuildUpdateDto(oldGuild, newGuild);
 
   await new Promise<void>(() => {
@@ -159,7 +182,7 @@ discordClient.on('guildUpdate', async (oldGuild, newGuild) => {
 });
 
 /**Guild Role Create */
-discordClient.on('roleCreate', async (role) => {
+registerEvent(EventType.RoleCreate, async (role) => {
   const guildRoleDto = new GuildRoleDto(role);
 
   await new Promise<void>(() => {
@@ -168,7 +191,7 @@ discordClient.on('roleCreate', async (role) => {
 });
 
 /**Guild Role Update */
-discordClient.on('roleUpdate', async (oldRole, newRole) => {
+registerEvent(EventType.RoleUpdate, async (oldRole, newRole) => {
   const guildRoleDto = new GuildRoleUpdateDto(oldRole, newRole);
 
   await new Promise<void>(() => {
@@ -177,7 +200,7 @@ discordClient.on('roleUpdate', async (oldRole, newRole) => {
 });
 
 /**Guild Role Delete */
-discordClient.on('roleDelete', async (role) => {
+registerEvent(EventType.RoleDelete, async (role) => {
   const guildRoleDto = new GuildRoleDto(role);
 
   await new Promise<void>(() => {

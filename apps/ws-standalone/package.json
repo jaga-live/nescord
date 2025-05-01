@@ -1,0 +1,15 @@
+{
+  "name": "@nescord/ws-standalone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node lib/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nescord/ws": "file:../ws/nescord-ws-1.0.0.tgz",
+    "dotenv": "^16.5.0"
+  }
+}
