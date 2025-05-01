@@ -7,8 +7,8 @@ services:
 
     # Option 1: Use .env file in same folder Or inline environment variables
     environment:
-      - DISCORD_BOT_TOKEN=your-token
-      - GRPC_HOST=bot-main:50051
+      - DISCORD_BOT_TOKEN=your_bot_token
+      - GRPC_HOST=bot-main:5000
       - DISCORD_INTENTS=1,2 # comma separated list of GatewayIntentBits (discord.js)
 
 

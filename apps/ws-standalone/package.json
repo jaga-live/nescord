@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nescord/ws": "file:../ws/nescord-ws-1.0.0.tgz",
+    "@nescord/ws": "^1.0.0-beta.1",
     "dotenv": "^16.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
   }
 }
