@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  nescord-ws:
+    image: jagalive/nescord-ws:latest
+    container_name: nescord-ws # Replace with your bot name if needed
+
+    # Option 1: Use .env file in same folder Or inline environment variables
+    environment:
+      - DISCORD_BOT_TOKEN=your_bot_token
+      - GRPC_HOST=bot-main:5000
+      - DISCORD_INTENTS=1,2 # comma separated list of GatewayIntentBits (discord.js)
+
+
+    # Option 2: Use .env file in same folder
+    # env_file:
+    #   - .env

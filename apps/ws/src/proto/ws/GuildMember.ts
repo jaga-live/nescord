@@ -10,7 +10,7 @@ export interface GuildMember {
   'displayName'?: (string);
   'globalName'?: (string);
   'avatar'?: (string);
-  'accent'?: (string);
+  'accent'?: (number);
   'bot'?: (boolean);
   'system'?: (boolean);
   'roles'?: (_ws_GuildRole)[];
@@ -28,7 +28,7 @@ export interface GuildMember__Output {
   'displayName'?: (string);
   'globalName'?: (string);
   'avatar'?: (string);
-  'accent'?: (string);
+  'accent'?: (number);
   'bot'?: (boolean);
   'system'?: (boolean);
   'roles'?: (_ws_GuildRole__Output)[];

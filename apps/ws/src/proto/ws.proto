@@ -6,6 +6,7 @@ service EventsService{
   rpc messageUpdate (GuildMessageUpdate) returns (NoResponse);
   rpc messageDelete (GuildMessage) returns (NoResponse);
   rpc messageReactionAdd (GuildMessageReactionAdd) returns (NoResponse);
+  rpc messageReactionRemove (GuildMessageReactionAdd) returns (NoResponse);
   rpc guildMemberAdd (GuildMember) returns (NoResponse);
   rpc guildMemberUpdate (GuildMemberUpadte) returns (NoResponse);
   rpc channelCreate (GuildChannel) returns (NoResponse);
@@ -15,6 +16,7 @@ service EventsService{
   rpc guildUpdate (GuildUpdate) returns (NoResponse);
   rpc roleCreate (GuildRole) returns (NoResponse);
   rpc roleUpdate (GuildRoleUpdate) returns (NoResponse);
+  rpc roleDelete (GuildRole) returns (NoResponse);
 }
 
 /** Shared **/
@@ -136,7 +138,7 @@ message GuildMember {
   string displayName = 4;
   string globalName = 5;
   string avatar = 6;
-  string accent = 7;
+  int32 accent = 7;
   bool bot = 8;
   bool system = 9;
   repeated GuildRole roles = 10;

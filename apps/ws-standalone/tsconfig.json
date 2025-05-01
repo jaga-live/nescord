@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES2022",
+    "module": "CommonJS",
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "types": ["reflect-metadata", "node"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "declaration": true,
+    "moduleResolution": "node"
+  }
+}
