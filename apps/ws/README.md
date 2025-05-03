@@ -2,7 +2,7 @@
 
 A scalable Discord WebSocket microservice for managing large-scale events, utilizing hybrid sharding and gRPC communication.
 
-[![Documentation](https://img.shields.io/badge/Documentation-green)](https://github.com/jaga-live/nescord/blob/main/docs/ws-docs.md)
+[![Documentation](https://img.shields.io/badge/Documentation-green)](https://github.com/jaga-live/nescord)
 
 ## Features ✨
 
@@ -27,6 +27,7 @@ The `WsClient` is responsible for receiving events from the Discord Gateway and 
 
 ```typescript
 import { WsClient } from '@nescord/ws';
+import { GatewayIntentBits } from 'discord.js';
 
 const client = new WsClient({
   token: 'YOUR_DISCORD_BOT_TOKEN',
@@ -36,8 +37,8 @@ const client = new WsClient({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
   ],
-  shardsPerCluster: 2,
   events: '*',
+  shardsPerCluster: 2,
 });
 ```
 

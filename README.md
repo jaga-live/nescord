@@ -37,6 +37,7 @@ The WebSocket package manages Discord Gateway connections and events:
   - Scalable sharding using hybrid sharding approach
   - gRPC communication for efficient event transmission
   - Modular architecture with customizable interfaces
+  - Uses `discord-hybrid-sharding` under the hood.
 
   <br>
 
@@ -54,10 +55,10 @@ The REST package handles API interactions with Discord:
   - Intelligent rate limit handling to prevent API errors
   - Configurable caching system to reduce API calls
   - Optimized for high-throughput environments
+  - Uses `@discordeno/rest` under the hood.
+    <br>
 
-<br>
-
-    > Note💡: This package should be used as a standalone microservice and cannot be horizontally scaled.
+  > Note💡: This package should be used as a standalone microservice and cannot be horizontally scaled.
 
 ## Installation 💻
 
@@ -84,6 +85,7 @@ This service handles all Discord gateway connections and events.
 // bot-ws/index.ts
 import { WsClient } from '@nescord/ws';
 import { GatewayIntentBits } from 'discord.js';
+import { EventType } from '@nescord/ws/lib/enum/event-type.enum';
 
 new WsClient({
   token: 'YOUR_DISCORD_BOT_TOKEN',
@@ -94,7 +96,11 @@ new WsClient({
     GatewayIntentBits.MessageContent,
   ],
   shardsPerCluster: 2,
-  events: '*', // Listen to all events
+  events: [
+    EventType.MessageCreate,
+    EventType.GuildCreate,
+    EventType.MessageReactionAdd,
+  ], // Use '*' for all events.
 });
 ```
 
@@ -162,6 +168,8 @@ listener.on('guildCreate', (guild) => {
   console.log(`Bot joined a new guild: ${guild.name}`);
 });
 ```
+
+The above code WsListener acts as a listener for the events received from the bot-ws microservice and RestClient acts as a client for making rest calls to the bot-rest microservice.
 
 ### Docker Compose Example
 
