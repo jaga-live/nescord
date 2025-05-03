@@ -1,32 +1,29 @@
-# nescord
+# nescord 🚀
 
-Nescord is a comprehensive library designed for building highly scalable Discord bots with a microservice architecture. It provides a set of packages that enable horizontal scaling, efficient rate limit handling, and optimized performance for large-scale bot applications.
+Nescord is designed for building highly scalable Discord bots with a microservice architecture. It provides a set of packages that enable horizontal scaling, efficient rate limit handling, and optimized performance for large-scale bot applications.
 
 > ⚠️ **Warning:** This library is still under development and a stable version is yet to be released.
 
-## Use Cases
+## Use Cases 🎯
 
 - **Large-scale Discord bots**: Ideal for applications that need to handle many guilds and high event volumes
 - **Load-balanced bot deployments**: Perfect for scenarios requiring horizontal scaling of bot logic
 - **High-availability requirements**: Microservice architecture improves resilience and uptime
 
-## Architecture Overview
+## Architecture Overview 🏗️
 
 Nescord uses a microservice architecture designed specifically for high-scale Discord bots, with a strong focus on modularity, performance, and maintainability. Each major responsibility is isolated into its own microservice:
 
-**bot-ws (WebSocket Microservice)**
-
+**bot-ws (WebSocket Microservice)**:
 This service is dedicated to handling Discord Gateway events. By keeping it lightweight and free from application logic, it can handle a large number of shards efficiently. Thanks to its simplicity, this service rarely needs to be restarted, which significantly reduces downtime.
 
-**bot-main (Core Bot Logic)**
-
+**bot-main (Core Bot Logic)**:
 The main application logic—commands, business rules, and feature handling—lives here. Because it doesn't maintain any direct connection to the Discord Gateway, it can be restarted or scaled independently without affecting bot uptime. This separation helps developers deploy updates frequently with minimal disruption.
 
-**bot-rest (REST Microservice)**
+**bot-rest (REST Microservice)**:
+All REST API interactions with Discord are handled here, including sending messages and managing guild data. This service helps control Discord's rate limits effectively and includes built-in caching to reduce redundant API calls.
 
-All REST API interactions with Discord are handled here, including sending messages and managing guild data. This service helps control Discord’s rate limits effectively and includes built-in caching to reduce redundant API calls.
-
-## Packages
+## Packages 📦
 
 ### @nescord/ws
 
@@ -62,7 +59,7 @@ The REST package handles API interactions with Discord:
 
     > Note💡: This package should be used as a standalone microservice and cannot be horizontally scaled.
 
-## Installation
+## Installation 💻
 
 ```bash
 # Install WebSocket package
@@ -73,7 +70,7 @@ npm install @nescord/rest
 
 ```
 
-## Getting Started
+## Getting Started 🚀
 
 Here's how to set up a scalable Discord bot using Nescord:
 
@@ -103,7 +100,7 @@ new WsClient({
 
 This above code will start listening for the events from the Discord gateway and forward them to the bot-main microservice via gRPC.
 
-Visit detailed documentation - [@nescord/ws](https://github.com/jaga-live/nescord/blob/main/docs/ws-docs.md)
+Visit detailed documentation - [@nescord/ws](https://github.com/jaga-live/nescord/blob/main/apps/ws/README.md)
 
 ### 2. REST Microservice (bot-rest)
 
@@ -125,7 +122,7 @@ new RestServer({
 
 The above code will start a REST server that handles all API interactions requested from the bot-main microservice and forwards them to Discord.
 
-Visit detailed documentation - [@nescord/rest](https://github.com/jaga-live/nescord/blob/main/docs/rest-docs.md)
+Visit detailed documentation - [@nescord/rest](https://github.com/jaga-live/nescord/blob/main/apps/rest/README.md)
 
 ### 3. Main Bot Microservice (bot-main)
 
@@ -168,7 +165,7 @@ listener.on('guildCreate', (guild) => {
 
 ### Docker Compose Example
 
-Alternatively, you can use the provided docker-compose configuration for bot-ws and bot-rest microservices with zero code changes.
+Alternatively, you can use the provided docker-compose configuration for bot-ws and bot-rest microservices which are ready to be deployed.
 
 ```yaml
 version: '3.8'
@@ -190,13 +187,13 @@ services:
     #   - .env
 ```
 
-## Documentation
+## Documentation 📖
 
 For detailed documentation on each package:
 
-- [@nescord/ws documentation](https://github.com/jaga-live/nescord/blob/main/docs/ws-docs.md)
-- [@nescord/rest documentation](https://github.com/jaga-live/nescord/blob/main/docs/rest-docs.md)
+- [@nescord/ws documentation](https://github.com/jaga-live/nescord/blob/main/apps/ws/README.md)
+- [@nescord/rest documentation](https://github.com/jaga-live/nescord/blob/main/apps/rest/README.md)
 
-## Contributing
+## Contributing 🤝
 
 Contributions are welcome! Please fork the repository and submit a pull request.
