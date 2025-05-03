@@ -6,10 +6,10 @@ A scalable Discord WebSocket microservice for managing large-scale events, utili
 
 ## Features ✨
 
-- Seamless Discord bot sharding via `discord-hybrid-sharding`
-- gRPC-based event listener and server
-- Modular client and listener interfaces
-- TypeScript support
+- **Scalable Sharding**: Efficiently manage Discord bot sharding using `discord-hybrid-sharding`.
+- **gRPC Communication**: Utilize gRPC for seamless event transmission to the main bot microservice.
+- **Modular Architecture**: Customize client and listener interfaces to suit your application's needs.
+- **TypeScript Support**: Benefit from type safety and enhanced development experience.
 
 ## Installation 📦
 
@@ -21,7 +21,9 @@ npm install @nescord/ws
 
 ### WebSocket Client 🔗
 
-This client receives events from Discord Gateway and forwards them to the main bot via gRPC.
+The `WsClient` is responsible for receiving events from the Discord Gateway and forwarding them to the main bot via gRPC.
+
+> 💡The app using this package should be a standalone microservice.
 
 ```typescript
 import { WsClient } from '@nescord/ws';
@@ -39,15 +41,28 @@ const client = new WsClient({
 });
 ```
 
+**token**: Your discord bot token.
+
+**gRPCHost**: The address of the gRPC server to which events will be forwarded (should be the address of the main bot microservice). This should be in the format `host:port`.
+
+**intents**: An array of `GatewayIntentBits` that specify the types of events your bot is interested in receiving. These intents help manage the flow of information from the Discord Gateway.
+
+**events**: Defines which events should be listened for. Using '\*' will listen for all events, but specific event types can also be specified from `EventType` enum (e.g., `EventType.MessageCreate`).
+
+**shardsPerCluster**: The number of shards to be allocated per cluster. This helps in distributing the workload across multiple instances of the bot.
+
+---
+
 ### WebSocket Listener 👂
 
-This listener receives events from the ws microservice.
+The `WsListener` listens for events emitted by the `WsClient` and processes them accordingly.
+
+> 💡 The application utilizing `WsListener` should serve as the primary bot microservice. Since this layer does not directly interact with the Discord gateway, it avoids race conditions and can be horizontally scaled to manage increased load.
 
 ```typescript
 import { WsListener } from '@nescord/ws';
 
 const listener = new WsListener({
-  token: 'YOUR_DISCORD_BOT_TOKEN',
   gRPCHost: 'bot-main:5000',
 });
 
@@ -55,6 +70,10 @@ listener.on('messageCreate', (message) => {
   console.log(message);
 });
 ```
+
+**gRPCHost**: The address of the gRPC server from which events will be received (ideally bot-ws will use the same address). This should be in the format `host:port`.
+
+---
 
 ### REST Client 🌐
 
@@ -68,4 +87,6 @@ This project is licensed under Apache License 2.0.
 
 ## Contributing 🤝
 
-Pull requests are welcome! Please open an issue first to discuss what you would like to change.
+For any additional information or questions, please refer to the [GitHub repository](https://github.com/jaga-live/nescord) or open an issue.
+
+Thank you for using `@nescord/ws`! We hope it enhances your Discord bot development experience.

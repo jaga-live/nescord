@@ -66,7 +66,6 @@ import { WsListener } from '@nescord/ws';
 
 const listener = new WsListener({
   token: 'YOUR_DISCORD_BOT_TOKEN',
-  // Additional listener configuration
 });
 ```
 
