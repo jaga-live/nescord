@@ -10,6 +10,7 @@ services:
       - DISCORD_BOT_TOKEN=your_bot_token
       - GRPC_HOST=bot-main:5000
       - DISCORD_INTENTS=1,2 # comma separated list of GatewayIntentBits (discord.js)
+      - EVENTS=* # comma separated list of EventType or use '*' for all events
 
 
     # Option 2: Use .env file in same folder
