@@ -1,5 +1,5 @@
 {
-  "name": "@nescord/ws-standalone",
+  "name": "@nescord/standalone",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nescord/ws": "^1.0.0-beta.1",
+    "@nescord/ws": "^1.0.0-beta.6",
     "dotenv": "^16.5.0"
   },
   "devDependencies": {

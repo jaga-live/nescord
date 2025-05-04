@@ -1,10 +1,10 @@
-import { IntentsBitField } from 'discord.js';
+import { GatewayIntentBits } from 'discord.js';
 import { EventType } from '../enum/event-type.enum';
 
 export interface WsClientOptions {
   token: string;
   gRPCHost: string;
-  intents: IntentsBitField[];
+  intents: number[] | GatewayIntentBits[];
   events?: string | EventType[];
   shardsPerCluster?: number;
 }

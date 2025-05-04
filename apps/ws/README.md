@@ -2,7 +2,7 @@
 
 A scalable Discord WebSocket microservice for managing large-scale events, utilizing hybrid sharding and gRPC communication.
 
-[![Documentation](https://img.shields.io/badge/Documentation-green)](https://github.com/jaga-live/nescord)
+[![Documentation](https://img.shields.io/badge/Documentation-green)](https://github.com/jaga-live/nescord#readme)
 
 ## Features ✨
 
