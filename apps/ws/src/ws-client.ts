@@ -9,7 +9,7 @@ export class WsClient {
 
   async bootstrap(options: WsClientOptions) {
     const manager = new ClusterManager(join(__dirname, './bot.js'), {
-      totalShards: 'auto',
+      totalShards: options.totalShards || 'auto',
       shardsPerClusters: options.shardsPerCluster || 2,
       mode: 'process',
       token: options.token,

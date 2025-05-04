@@ -6,5 +6,6 @@ export interface WsClientOptions {
   gRPCHost: string;
   intents: number[] | GatewayIntentBits[];
   events?: string | EventType[];
+  totalShards?: number;
   shardsPerCluster?: number;
 }
