@@ -9,6 +9,7 @@ const token = process.env.DISCORD_BOT_TOKEN as string;
 const gRPCHost = process.env.GRPC_HOST as string;
 const intents = process.env.DISCORD_INTENTS as string;
 const events = process.env.EVENTS as string;
+const shardsPerCluster = process.env.SHARDS_PER_CLUSTER as string;
 const allEvents = Object.values(EventType);
 
 new WsClient({
@@ -18,4 +19,5 @@ new WsClient({
     (intent) => intent as unknown as GatewayIntentBits,
   ),
   events: events === '*' ? allEvents : (events?.split(',') as EventType[]),
+  shardsPerCluster: shardsPerCluster ? parseInt(shardsPerCluster) : 2,
 });

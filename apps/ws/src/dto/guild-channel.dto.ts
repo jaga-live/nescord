@@ -27,7 +27,7 @@ export class GuildChannelDto {
     this.position = channel.rawPosition;
     this.lastMessageId = channel.lastMessageId;
     this.rateLimitPerUser = channel.rateLimitPerUser;
-    this.permissionOverwrites = channel.permissionOverwrites?.cache.map(
+    this.permissionOverwrites = channel.permissionOverwrites?.cache?.map(
       (e) => ({
         id: e.id,
         type: e.type,
@@ -37,8 +37,8 @@ export class GuildChannelDto {
 
     if (channel.parent) {
       this.parent = {
-        id: channel.parent.id,
-        name: channel.parent.name,
+        id: channel.parent?.id,
+        name: channel.parent?.name,
       };
     }
 

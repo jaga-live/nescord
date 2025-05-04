@@ -46,7 +46,7 @@ export class GuildDto {
     this.preferredLocale = guild.preferredLocale;
     this.ownerId = guild.ownerId;
     this.memberCount = guild.memberCount;
-    this.channelCount = guild.channels?.cache.size;
+    this.channelCount = guild.channels?.cache?.size;
     this.verificationLevel = guild.verificationLevel;
     this.premiumTier = guild.premiumTier;
     this.mfaLevel = guild.mfaLevel;
@@ -54,7 +54,7 @@ export class GuildDto {
     this.afkChannelId = guild.afkChannelId;
     this.afkTimeout = guild.afkTimeout;
     this.systemChannelId = guild.systemChannelId;
-    this.systemChannelFlags = guild.systemChannelFlags?.bitfield.toString();
+    this.systemChannelFlags = guild.systemChannelFlags?.bitfield?.toString();
     this.defaultMessageNotifications = guild.defaultMessageNotifications;
     this.explicitContentFilter = guild.explicitContentFilter;
     this.premiumProgressBarEnabled = guild.premiumProgressBarEnabled;

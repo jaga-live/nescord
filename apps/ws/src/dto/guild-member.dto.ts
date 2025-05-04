@@ -26,18 +26,18 @@ export class GuildMemberDto {
     }
 
     this.id = member.id;
-    this.guildId = member.guild.id;
-    this.username = member.user.username;
+    this.guildId = member.guild?.id;
+    this.username = member.user?.username;
     this.displayName = member.displayName;
-    this.globalName = member.user.globalName;
+    this.globalName = member.user?.globalName;
     this.avatar = member.avatar;
-    this.banner = member.user.banner;
-    this.bot = member.user.bot;
-    this.system = member.user.system;
-    this.roles = member.roles.cache.map((role) => new GuildRoleDto(role));
-    this.permissions = member.permissions.toArray();
+    this.banner = member.user?.banner;
+    this.bot = member.user?.bot;
+    this.system = member.user?.system;
+    this.roles = member.roles?.cache?.map((role) => new GuildRoleDto(role));
+    this.permissions = member.permissions?.toArray();
     this.joinedAt = member.joinedAt;
-    this.createdAt = member.user.createdAt;
+    this.createdAt = member.user?.createdAt;
     this.pending = member.pending;
     this.guild = new GuildDto(member.guild);
   }
@@ -45,17 +45,17 @@ export class GuildMemberDto {
   public static fromApiResponse(data: any): GuildMemberDto {
     const guildMemberDto: GuildMemberDto = new GuildMemberDto();
 
-    guildMemberDto.id = data.user.id;
-    guildMemberDto.globalName = data.user.global_name;
-    guildMemberDto.username = data.user.username;
+    guildMemberDto.id = data.user?.id;
+    guildMemberDto.globalName = data.user?.global_name;
+    guildMemberDto.username = data.user?.username;
     guildMemberDto.displayName = data.nick;
     guildMemberDto.guildId = data.guild_id;
-    guildMemberDto.avatar = data.user.avatar;
-    guildMemberDto.banner = data.user.banner;
-    guildMemberDto.bot = data.user.bot;
-    guildMemberDto.system = data.user.system;
-    guildMemberDto.accent = data.user.accent_color;
-    guildMemberDto.roles = data.roles.map(
+    guildMemberDto.avatar = data.user?.avatar;
+    guildMemberDto.banner = data.user?.banner;
+    guildMemberDto.bot = data.user?.bot;
+    guildMemberDto.system = data.user?.system;
+    guildMemberDto.accent = data.user?.accent_color;
+    guildMemberDto.roles = data.roles?.map(
       (roleId: string) => new GuildRoleDto({ id: roleId } as Role),
     );
     guildMemberDto.joinedAt = data.joined_at;

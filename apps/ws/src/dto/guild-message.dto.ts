@@ -25,7 +25,7 @@ export class GuildMessageDto {
     this.channelId = message.channelId;
     this.content = message.content;
     this.mentions = this.extractMessageMentions(message);
-    this.attachments = message.attachments.map(
+    this.attachments = message.attachments?.map(
       (e) => new GuildMessageAttachmentsDto(e),
     );
     this.reference = message.reference;
@@ -37,15 +37,15 @@ export class GuildMessageDto {
       ...message.author,
       guild: { id: message.guildId },
       user: {
-        username: message.author.username,
-        globalName: message.author.globalName,
-        banner: message.author.banner,
-        bot: message.author.bot,
-        system: message.author.system,
+        username: message.author?.username,
+        globalName: message.author?.globalName,
+        banner: message.author?.banner,
+        bot: message.author?.bot,
+        system: message.author?.system,
       },
-      displayName: message.author.displayName,
-      roles: message.member.roles,
-      permissions: message.member.permissions,
+      displayName: message.author?.displayName,
+      roles: message.member?.roles,
+      permissions: message.member?.permissions,
     };
 
     this.author = new GuildMemberDto(guildMember as any);
@@ -84,10 +84,10 @@ export class GuildMessageReactionDto extends GuildMessageDto {
     super(message.message as Message);
 
     this.emoji = {
-      id: message.emoji.id,
-      name: message.emoji.name,
-      animated: message.emoji.animated,
-      imageURL: message.emoji.imageURL(),
+      id: message.emoji?.id,
+      name: message.emoji?.name,
+      animated: message.emoji?.animated,
+      imageURL: message.emoji?.imageURL(),
       createdAt: this.createdAt,
       user: new GuildUserDto(member),
     };
