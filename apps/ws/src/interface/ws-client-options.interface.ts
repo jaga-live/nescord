@@ -8,4 +8,7 @@ export interface WsClientOptions {
   events?: string | EventType[];
   totalShards?: number;
   shardsPerCluster?: number;
+  timeout?: number;
+  respawn?: boolean;
+  spawnDelay?: number;
 }

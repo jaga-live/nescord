@@ -16,7 +16,7 @@ export interface ProtoGrpcType {
     GuildChannelUpdate: MessageTypeDefinition
     GuildEmoji: MessageTypeDefinition
     GuildMember: MessageTypeDefinition
-    GuildMemberUpadte: MessageTypeDefinition
+    GuildMemberUpdate: MessageTypeDefinition
     GuildMessage: MessageTypeDefinition
     GuildMessageReactionAdd: MessageTypeDefinition
     GuildMessageUpdate: MessageTypeDefinition

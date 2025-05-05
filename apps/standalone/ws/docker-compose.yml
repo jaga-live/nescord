@@ -13,6 +13,8 @@ services:
       - EVENTS=* # comma separated list of EventType or use '*' for all events
       - TOTAL_SHARDS=20 # will be defaulted to 'auto' if nt passed
       - SHARDS_PER_CLUSTER=2
+      - RESPAWN=true
+      - SPAWN_DELAY=7500
 
     # Option 2: Use .env file in same folder
     # env_file:

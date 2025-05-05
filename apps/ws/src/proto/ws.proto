@@ -8,7 +8,7 @@ service EventsService{
   rpc messageReactionAdd (GuildMessageReactionAdd) returns (NoResponse);
   rpc messageReactionRemove (GuildMessageReactionAdd) returns (NoResponse);
   rpc guildMemberAdd (GuildMember) returns (NoResponse);
-  rpc guildMemberUpdate (GuildMemberUpadte) returns (NoResponse);
+  rpc guildMemberUpdate (GuildMemberUpdate) returns (NoResponse);
   rpc channelCreate (GuildChannel) returns (NoResponse);
   rpc channelUpdate (GuildChannelUpdate) returns (NoResponse);
   rpc channelDelete (GuildChannel) returns (NoResponse);
@@ -149,7 +149,7 @@ message GuildMember {
   Guild guild = 15;
 }
 
-message GuildMemberUpadte {
+message GuildMemberUpdate {
   GuildMember oldMember = 1;
   GuildMember newMember = 2;
 }

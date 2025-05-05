@@ -6,7 +6,7 @@ import type { Guild as _ws_Guild, Guild__Output as _ws_Guild__Output } from '../
 import type { GuildChannel as _ws_GuildChannel, GuildChannel__Output as _ws_GuildChannel__Output } from '../ws/GuildChannel';
 import type { GuildChannelUpdate as _ws_GuildChannelUpdate, GuildChannelUpdate__Output as _ws_GuildChannelUpdate__Output } from '../ws/GuildChannelUpdate';
 import type { GuildMember as _ws_GuildMember, GuildMember__Output as _ws_GuildMember__Output } from '../ws/GuildMember';
-import type { GuildMemberUpadte as _ws_GuildMemberUpadte, GuildMemberUpadte__Output as _ws_GuildMemberUpadte__Output } from '../ws/GuildMemberUpadte';
+import type { GuildMemberUpdate as _ws_GuildMemberUpdate, GuildMemberUpdate__Output as _ws_GuildMemberUpdate__Output } from '../ws/GuildMemberUpdate';
 import type { GuildMessage as _ws_GuildMessage, GuildMessage__Output as _ws_GuildMessage__Output } from '../ws/GuildMessage';
 import type { GuildMessageReactionAdd as _ws_GuildMessageReactionAdd, GuildMessageReactionAdd__Output as _ws_GuildMessageReactionAdd__Output } from '../ws/GuildMessageReactionAdd';
 import type { GuildMessageUpdate as _ws_GuildMessageUpdate, GuildMessageUpdate__Output as _ws_GuildMessageUpdate__Output } from '../ws/GuildMessageUpdate';
@@ -41,10 +41,10 @@ export interface EventsServiceClient extends grpc.Client {
   guildMemberAdd(argument: _ws_GuildMember, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   guildMemberAdd(argument: _ws_GuildMember, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   
-  guildMemberUpdate(argument: _ws_GuildMemberUpadte, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
-  guildMemberUpdate(argument: _ws_GuildMemberUpadte, metadata: grpc.Metadata, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
-  guildMemberUpdate(argument: _ws_GuildMemberUpadte, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
-  guildMemberUpdate(argument: _ws_GuildMemberUpadte, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  guildMemberUpdate(argument: _ws_GuildMemberUpdate, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  guildMemberUpdate(argument: _ws_GuildMemberUpdate, metadata: grpc.Metadata, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  guildMemberUpdate(argument: _ws_GuildMemberUpdate, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
+  guildMemberUpdate(argument: _ws_GuildMemberUpdate, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   
   guildUpdate(argument: _ws_GuildUpdate, metadata: grpc.Metadata, options: grpc.CallOptions, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
   guildUpdate(argument: _ws_GuildUpdate, metadata: grpc.Metadata, callback: grpc.requestCallback<_ws_NoResponse__Output>): grpc.ClientUnaryCall;
@@ -104,7 +104,7 @@ export interface EventsServiceHandlers extends grpc.UntypedServiceImplementation
   
   guildMemberAdd: grpc.handleUnaryCall<_ws_GuildMember__Output, _ws_NoResponse>;
   
-  guildMemberUpdate: grpc.handleUnaryCall<_ws_GuildMemberUpadte__Output, _ws_NoResponse>;
+  guildMemberUpdate: grpc.handleUnaryCall<_ws_GuildMemberUpdate__Output, _ws_NoResponse>;
   
   guildUpdate: grpc.handleUnaryCall<_ws_GuildUpdate__Output, _ws_NoResponse>;
   
@@ -132,7 +132,7 @@ export interface EventsServiceDefinition extends grpc.ServiceDefinition {
   channelUpdate: MethodDefinition<_ws_GuildChannelUpdate, _ws_NoResponse, _ws_GuildChannelUpdate__Output, _ws_NoResponse__Output>
   guildCreate: MethodDefinition<_ws_Guild, _ws_NoResponse, _ws_Guild__Output, _ws_NoResponse__Output>
   guildMemberAdd: MethodDefinition<_ws_GuildMember, _ws_NoResponse, _ws_GuildMember__Output, _ws_NoResponse__Output>
-  guildMemberUpdate: MethodDefinition<_ws_GuildMemberUpadte, _ws_NoResponse, _ws_GuildMemberUpadte__Output, _ws_NoResponse__Output>
+  guildMemberUpdate: MethodDefinition<_ws_GuildMemberUpdate, _ws_NoResponse, _ws_GuildMemberUpdate__Output, _ws_NoResponse__Output>
   guildUpdate: MethodDefinition<_ws_GuildUpdate, _ws_NoResponse, _ws_GuildUpdate__Output, _ws_NoResponse__Output>
   messageCreate: MethodDefinition<_ws_GuildMessage, _ws_NoResponse, _ws_GuildMessage__Output, _ws_NoResponse__Output>
   messageDelete: MethodDefinition<_ws_GuildMessage, _ws_NoResponse, _ws_GuildMessage__Output, _ws_NoResponse__Output>

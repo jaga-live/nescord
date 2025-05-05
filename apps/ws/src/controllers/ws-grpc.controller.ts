@@ -1,12 +1,11 @@
 import { sendUnaryData, ServerUnaryCall } from '@grpc/grpc-js';
-import { WsListenerOptions } from '../interface/ws-listener-options.interface';
 import { EventsServiceHandlers } from '../proto/ws/EventsService';
 import { Guild__Output } from '../proto/ws/Guild';
 import { NoResponse } from '../proto/ws/NoResponse';
 import { GuildChannel__Output } from '../proto/ws/GuildChannel';
 import { GuildChannelUpdate__Output } from '../proto/ws/GuildChannelUpdate';
 import { GuildMember__Output } from '../proto/ws/GuildMember';
-import { GuildMemberUpadte__Output } from '../proto/ws/GuildMemberUpadte';
+import { GuildMemberUpdate__Output } from '../proto/ws/GuildMemberUpdate';
 import { GuildRole__Output } from '../proto/ws/GuildRole';
 import { GuildRoleUpdate__Output } from '../proto/ws/GuildRoleUpdate';
 import { GuildUpdate__Output } from '../proto/ws/GuildUpdate';
@@ -16,85 +15,132 @@ export class WsGrpcController implements EventsServiceHandlers {
   [name: string]: any;
   private listener: WsListener;
 
-  constructor(options: WsListenerOptions, listener: WsListener) {
-    this.options = options;
+  constructor(listener: WsListener) {
     this.listener = listener;
   }
 
-  async messageCreate(call: ServerUnaryCall<any, any>) {
-    this.listener.emit(this.messageCreate.name, call.request);
-  }
-
-  async messageUpdate(call: ServerUnaryCall<any, any>) {
-    this.listener.emit(this.messageUpdate.name, call.request);
-  }
-
-  async messageDelete(
-    call: ServerUnaryCall<any, any>,
-    callback: sendUnaryData<any>,
+  private handleEvent<T>(
+    eventName: string,
+    call: ServerUnaryCall<T, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
   ) {
-    this.listener.emit(this.messageDelete.name, call.request);
+    try {
+      this.listener.emit(eventName, call.request);
+      callback(null, {});
+    } catch (error) {
+      callback(error as Error, null);
+    }
   }
 
-  async messageReactionAdd(
-    call: ServerUnaryCall<any, any>,
-    callback: sendUnaryData<any>,
+  messageCreate(
+    call: ServerUnaryCall<any, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
   ) {
-    this.listener.emit(this.messageReactionAdd.name, call.request);
+    this.handleEvent(this.messageCreate.name, call, callback);
   }
 
-  async messageReactionRemove(
-    call: ServerUnaryCall<any, any>,
-    callback: sendUnaryData<any>,
+  messageUpdate(
+    call: ServerUnaryCall<any, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
   ) {
-    this.listener.emit(this.messageReactionRemove.name, call.request);
+    this.handleEvent(this.messageUpdate.name, call, callback);
   }
 
-  async guildCreate(call: ServerUnaryCall<Guild__Output, NoResponse>) {
-    this.listener.emit(this.guildCreate.name, call.request);
+  messageDelete(
+    call: ServerUnaryCall<any, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.messageDelete.name, call, callback);
   }
 
-  async guildUpdate(call: ServerUnaryCall<GuildUpdate__Output, NoResponse>) {
-    this.listener.emit(this.guildUpdate.name, call.request);
+  messageReactionAdd(
+    call: ServerUnaryCall<any, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.messageReactionAdd.name, call, callback);
   }
 
-  async guildDelete(call: ServerUnaryCall<Guild__Output, NoResponse>) {
-    this.listener.emit(this.guildDelete.name, call.request);
+  messageReactionRemove(
+    call: ServerUnaryCall<any, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.messageReactionRemove.name, call, callback);
   }
 
-  async channelCreate(call: ServerUnaryCall<GuildChannel__Output, NoResponse>) {
-    this.listener.emit(this.channelCreate.name, call.request);
+  guildCreate(
+    call: ServerUnaryCall<Guild__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.guildCreate.name, call, callback);
   }
 
-  async channelDelete(call: ServerUnaryCall<GuildChannel__Output, NoResponse>) {
-    this.listener.emit(this.channelDelete.name, call.request);
+  guildUpdate(
+    call: ServerUnaryCall<GuildUpdate__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.guildUpdate.name, call, callback);
   }
 
-  async channelUpdate(
+  guildDelete(
+    call: ServerUnaryCall<Guild__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.guildDelete.name, call, callback);
+  }
+
+  channelCreate(
+    call: ServerUnaryCall<GuildChannel__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.channelCreate.name, call, callback);
+  }
+
+  channelDelete(
+    call: ServerUnaryCall<GuildChannel__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.channelDelete.name, call, callback);
+  }
+
+  channelUpdate(
     call: ServerUnaryCall<GuildChannelUpdate__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
   ) {
-    this.listener.emit(this.channelUpdate.name, call.request);
+    this.handleEvent(this.channelUpdate.name, call, callback);
   }
 
-  async guildMemberAdd(call: ServerUnaryCall<GuildMember__Output, NoResponse>) {
-    this.listener.emit(this.guildMemberAdd.name, call.request);
-  }
-
-  async guildMemberUpdate(
-    call: ServerUnaryCall<GuildMemberUpadte__Output, NoResponse>,
+  guildMemberAdd(
+    call: ServerUnaryCall<GuildMember__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
   ) {
-    this.listener.emit(this.guildMemberUpdate.name, call.request);
+    this.handleEvent(this.guildMemberAdd.name, call, callback);
   }
 
-  async roleCreate(call: ServerUnaryCall<GuildRole__Output, NoResponse>) {
-    this.listener.emit(this.roleCreate.name, call.request);
+  guildMemberUpdate(
+    call: ServerUnaryCall<GuildMemberUpdate__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.guildMemberUpdate.name, call, callback);
   }
 
-  async roleUpdate(call: ServerUnaryCall<GuildRoleUpdate__Output, NoResponse>) {
-    this.listener.emit(this.roleUpdate.name, call.request);
+  roleCreate(
+    call: ServerUnaryCall<GuildRole__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.roleCreate.name, call, callback);
   }
 
-  async roleDelete(call: ServerUnaryCall<GuildRole__Output, NoResponse>) {
-    this.listener.emit(this.roleDelete.name, call.request);
+  roleUpdate(
+    call: ServerUnaryCall<GuildRoleUpdate__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.roleUpdate.name, call, callback);
+  }
+
+  roleDelete(
+    call: ServerUnaryCall<GuildRole__Output, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.roleDelete.name, call, callback);
   }
 }

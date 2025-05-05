@@ -1,5 +1,11 @@
 import { ClusterClient, getInfo } from 'discord-hybrid-sharding';
-import { Client, ClientEvents, TextChannel } from 'discord.js';
+import {
+  Client,
+  ClientEvents,
+  MessageReaction,
+  TextChannel,
+  User,
+} from 'discord.js';
 import { WsClientOptions } from './interface/ws-client-options.interface';
 import {
   GuildMessageDto,
@@ -49,161 +55,106 @@ function registerEvent<K extends keyof ClientEvents>(
   }
 }
 
-/**Message Create */
 registerEvent(EventType.MessageCreate, async (message) => {
-  const guildMessage = new GuildMessageDto(message);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.messageCreate(guildMessage as unknown, () => {});
-  });
+  await grpcCall(eventsGrpcService.messageCreate, new GuildMessageDto(message));
 });
 
-/**Message Update */
-registerEvent(EventType.MessageUpdate, async (oldMessage: any, newMessage) => {
-  const guildMessageUpdate = new GuildMessageUpdateDto(oldMessage, newMessage);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.messageUpdate(guildMessageUpdate as unknown, () => {});
-  });
+registerEvent(EventType.MessageUpdate, async (oldMsg, newMsg) => {
+  await grpcCall(
+    eventsGrpcService.messageUpdate,
+    new GuildMessageUpdateDto(oldMsg as any, newMsg),
+  );
 });
 
-/**Message Delete */
-registerEvent(EventType.MessageDelete, async (message: any) => {
-  const guildMessage = new GuildMessageDto(message);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.messageDelete(guildMessage as unknown, () => {});
-  });
+registerEvent(EventType.MessageDelete, async (msg) => {
+  await grpcCall(
+    eventsGrpcService.messageDelete,
+    new GuildMessageDto(msg as any),
+  );
 });
 
-/**Message Reaction add */
-registerEvent(
-  EventType.MessageReactionAdd,
-  async (message: any, member: any) => {
-    const guildMessageReaction = new GuildMessageReactionDto(message, member);
-
-    await new Promise<void>(() => {
-      eventsGrpcService.messageReactionAdd(
-        guildMessageReaction as unknown,
-        () => {},
-      );
-    });
-  },
-);
-
-/**Message Reaction Remove */
-registerEvent(
-  EventType.MessageReactionRemove,
-  async (message: any, member: any) => {
-    const guildMessageReaction = new GuildMessageReactionDto(message, member);
-
-    await new Promise<void>(() => {
-      eventsGrpcService.messageReactionRemove(
-        guildMessageReaction as unknown,
-        () => {},
-      );
-    });
-  },
-);
-
-/**Member Add */
-registerEvent(EventType.GuildMemberAdd, async (member: any) => {
-  const guildMember = new GuildMemberDto(member);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.guildMemberAdd(guildMember as unknown, () => {});
-  });
+registerEvent(EventType.MessageReactionAdd, async (reaction, user) => {
+  await grpcCall(
+    eventsGrpcService.messageReactionAdd,
+    new GuildMessageReactionDto(reaction as MessageReaction, user as User),
+  );
 });
 
-/**Member Update */
-registerEvent(
-  EventType.GuildMemberUpdate,
-  async (oldMember: any, newMember: any) => {
-    const guildMemberUpdate = new GuildMemberUpdateDto(oldMember, newMember);
+registerEvent(EventType.MessageReactionRemove, async (reaction, user) => {
+  await grpcCall(
+    eventsGrpcService.messageReactionRemove,
+    new GuildMessageReactionDto(reaction as MessageReaction, user as User),
+  );
+});
 
-    await new Promise<void>(() => {
-      eventsGrpcService.guildMemberUpdate(
-        guildMemberUpdate as unknown,
-        () => {},
-      );
-    });
-  },
-);
+registerEvent(EventType.GuildMemberAdd, async (member) => {
+  await grpcCall(eventsGrpcService.guildMemberAdd, new GuildMemberDto(member));
+});
 
-/**Channel Create */
+registerEvent(EventType.GuildMemberUpdate, async (oldM, newM) => {
+  await grpcCall(
+    eventsGrpcService.guildMemberUpdate,
+    new GuildMemberUpdateDto(oldM, newM),
+  );
+});
+
 registerEvent(EventType.ChannelCreate, async (channel: TextChannel) => {
-  const guildChannel = new GuildChannelDto(channel);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.channelCreate(guildChannel as unknown, () => {});
-  });
+  await grpcCall(eventsGrpcService.channelCreate, new GuildChannelDto(channel));
 });
 
-/**Channel Update */
 registerEvent(
   EventType.ChannelUpdate,
-  async (oldChannel: TextChannel, newChannel: TextChannel) => {
-    const guildChannelUpdate = new GuildChannelUpdateDto(
-      oldChannel,
-      newChannel,
+  async (oldC: TextChannel, newC: TextChannel) => {
+    await grpcCall(
+      eventsGrpcService.channelUpdate,
+      new GuildChannelUpdateDto(oldC, newC),
     );
-
-    await new Promise<void>(() => {
-      eventsGrpcService.channelUpdate(guildChannelUpdate as unknown, () => {});
-    });
   },
 );
 
-/**Channel Delete */
 registerEvent(EventType.ChannelDelete, async (channel: TextChannel) => {
-  const guildChannel = new GuildChannelDto(channel);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.channelDelete(guildChannel as unknown, () => {});
-  });
+  await grpcCall(eventsGrpcService.channelDelete, new GuildChannelDto(channel));
 });
 
-/**Guild Create */
 registerEvent(EventType.GuildCreate, async (guild) => {
-  const guildDto = new GuildDto(guild);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.guildCreate(guildDto as unknown, () => {});
-  });
+  await grpcCall(eventsGrpcService.guildCreate, new GuildDto(guild));
 });
 
-/**Guild Update */
-registerEvent(EventType.GuildUpdate, async (oldGuild, newGuild) => {
-  const guildDto = new GuildUpdateDto(oldGuild, newGuild);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.guildUpdate(guildDto as unknown, () => {});
-  });
+registerEvent(EventType.GuildUpdate, async (oldG, newG) => {
+  await grpcCall(eventsGrpcService.guildUpdate, new GuildUpdateDto(oldG, newG));
 });
 
-/**Guild Role Create */
 registerEvent(EventType.RoleCreate, async (role) => {
-  const guildRoleDto = new GuildRoleDto(role);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.roleCreate(guildRoleDto as unknown, () => {});
-  });
+  await grpcCall(eventsGrpcService.roleCreate, new GuildRoleDto(role));
 });
 
-/**Guild Role Update */
-registerEvent(EventType.RoleUpdate, async (oldRole, newRole) => {
-  const guildRoleDto = new GuildRoleUpdateDto(oldRole, newRole);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.roleUpdate(guildRoleDto as unknown, () => {});
-  });
+registerEvent(EventType.RoleUpdate, async (oldR, newR) => {
+  await grpcCall(
+    eventsGrpcService.roleUpdate,
+    new GuildRoleUpdateDto(oldR, newR),
+  );
 });
 
-/**Guild Role Delete */
 registerEvent(EventType.RoleDelete, async (role) => {
-  const guildRoleDto = new GuildRoleDto(role);
-
-  await new Promise<void>(() => {
-    eventsGrpcService.roleDelete(guildRoleDto as unknown, () => {});
-  });
+  await grpcCall(eventsGrpcService.roleDelete, new GuildRoleDto(role));
 });
+
+async function grpcCall<T>(
+  fn: (data: any, cb: (err: any, res?: any) => void) => void,
+  data: T,
+) {
+  try {
+    await promisifyGrpcCall(fn.bind(eventsGrpcService), data);
+  } catch (error) {
+    console.error(`[gRPC ERROR] ${fn.name} failed:`, error);
+  }
+}
+
+function promisifyGrpcCall<T>(
+  fn: (data: T, cb: (err: any) => void) => void,
+  data: T,
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    fn(data, (err) => (err ? reject(err) : resolve()));
+  });
+}
