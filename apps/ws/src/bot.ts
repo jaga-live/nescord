@@ -146,7 +146,7 @@ async function grpcCall<T>(
   try {
     await promisifyGrpcCall(fn.bind(eventsGrpcService), data);
   } catch (error) {
-    console.error(`[gRPC ERROR] ${fn.name} failed:`, error);
+    console.error(`[gRPC ERROR] ${fn.name} failed:`, error.message);
   }
 }
 

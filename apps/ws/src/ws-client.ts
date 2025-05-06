@@ -20,42 +20,44 @@ export class WsClient {
 
     console.log('🔧 [ClusterManager] Starting shard spawn process...');
     try {
-      await manager.spawn({
-        timeout: options.timeout || -1,
-        delay: options.spawnDelay || 7000,
-      });
+      manager
+        .spawn({
+          timeout: options.timeout || -1,
+          delay: options.spawnDelay || 7000,
+        })
+        .then(() => {
+          console.log(
+            '✅ [ClusterManager] All clusters have been spawned successfully!',
+          );
+        });
 
-      console.log(
-        '✅ [ClusterManager] All clusters have been spawned successfully!',
-      );
+      manager.on('clusterCreate', (cluster: Cluster) => {
+        console.log(
+          `🚀 [Cluster ${cluster.id}] Created with ${cluster.shardList.length} shards`,
+        );
+
+        cluster.on('spawn', () => {
+          console.log(
+            `✅ [Cluster ${cluster.id}] Ready and connected to Discord Gateway`,
+          );
+        });
+
+        cluster.on('error', (err) => {
+          console.error(`❌ [Cluster ${cluster.id}] Error occurred:`, err);
+        });
+
+        cluster.on('death', () => {
+          console.warn(`⚠️ [Cluster ${cluster.id}] Process died`);
+        });
+
+        cluster.on('message', (message) => {
+          console.info(`♻️ [Cluster message] ${message}`);
+        });
+      });
     } catch (error) {
       console.error('❌ [ClusterManager] Failed to spawn clusters:', error);
 
       process.exit(1);
     }
-
-    manager.on('clusterCreate', (cluster: Cluster) => {
-      console.log(
-        `🚀 [Cluster ${cluster.id}] Created with ${cluster.shardList.length} shards`,
-      );
-
-      cluster.on('spawn', () => {
-        console.log(
-          `✅ [Cluster ${cluster.id}] Ready and connected to Discord`,
-        );
-      });
-
-      cluster.on('error', (err) => {
-        console.error(`❌ [Cluster ${cluster.id}] Error occurred:`, err);
-      });
-
-      cluster.on('death', () => {
-        console.warn(`⚠️ [Cluster ${cluster.id}] Process died`);
-      });
-
-      cluster.on('message', (message) => {
-        console.info(`♻️ [Cluster message] ${message}`);
-      });
-    });
   }
 }
