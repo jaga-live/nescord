@@ -8,14 +8,12 @@ export interface Guild {
   'description'?: (string);
   'icon'?: (string);
   'features'?: (string)[];
-  'joinedTimestamp'?: (number | string | Long);
-  'maximumMembers'?: (number | string | Long);
+  'joinedAt'?: (string);
+  'maxMembers'?: (number | string | Long);
   'rulesChannelId'?: (string);
   'publicUpdatesChannelId'?: (string);
   'preferredLocale'?: (string);
   'ownerId'?: (string);
-  'memberCount'?: (number | string | Long);
-  'channelCount'?: (number);
   'verificationLevel'?: (number);
   'premiumTier'?: (number);
   'mfaLevel'?: (number);
@@ -26,7 +24,7 @@ export interface Guild {
   'defaultMessageNotifications'?: (number);
   'explicitContentFilter'?: (number);
   'premiumProgressBarEnabled'?: (boolean);
-  'createdAt'?: (string);
+  'premiumSubscriptionCount'?: (number);
 }
 
 export interface Guild__Output {
@@ -35,14 +33,12 @@ export interface Guild__Output {
   'description'?: (string);
   'icon'?: (string);
   'features'?: (string)[];
-  'joinedTimestamp'?: (Long);
-  'maximumMembers'?: (Long);
+  'joinedAt'?: (string);
+  'maxMembers'?: (Long);
   'rulesChannelId'?: (string);
   'publicUpdatesChannelId'?: (string);
   'preferredLocale'?: (string);
   'ownerId'?: (string);
-  'memberCount'?: (Long);
-  'channelCount'?: (number);
   'verificationLevel'?: (number);
   'premiumTier'?: (number);
   'mfaLevel'?: (number);
@@ -53,5 +49,5 @@ export interface Guild__Output {
   'defaultMessageNotifications'?: (number);
   'explicitContentFilter'?: (number);
   'premiumProgressBarEnabled'?: (boolean);
-  'createdAt'?: (string);
+  'premiumSubscriptionCount'?: (number);
 }

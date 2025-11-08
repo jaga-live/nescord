@@ -1,9 +1,7 @@
-import { injectable } from 'inversify';
 import { MessageService } from './message.service';
 import { MemberServerService } from './member.service';
 import { RestServerOptions } from '../../interface/rest-server.interface';
 
-@injectable()
 export class ResourceHandlerService {
   private messageService: MessageService;
   private memberServerService: MemberServerService;

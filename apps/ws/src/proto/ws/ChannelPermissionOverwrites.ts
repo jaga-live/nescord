@@ -4,9 +4,13 @@
 export interface ChannelPermissionOverwrites {
   'id'?: (string);
   'type'?: (number);
+  'deny'?: (string);
+  'allow'?: (string);
 }
 
 export interface ChannelPermissionOverwrites__Output {
   'id'?: (string);
   'type'?: (number);
+  'deny'?: (string);
+  'allow'?: (string);
 }

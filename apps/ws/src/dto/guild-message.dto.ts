@@ -1,7 +1,4 @@
-import { Message, MessageReaction, TextChannel, User } from 'discord.js';
-import { GuildChannelDto } from './guild-channel.dto';
-import { GuildMemberDto, GuildUserDto } from './guild-member.dto';
-import { GuildDto } from './guild.dto';
+import { GuildMemberDto } from './guild-member.dto';
 
 export class GuildMessageDto {
   public id: string;
@@ -14,91 +11,82 @@ export class GuildMessageDto {
     users: Array<MessageAuthor>;
   };
   public attachments: GuildMessageAttachmentsDto[];
-  public reference: { guildId: string; channelId: string; messageId: string };
-  public createdAt: Date;
-  public channel: GuildChannelDto;
-  public guild: GuildDto;
+  public reference: {
+    messageId: string;
+    guildId: string;
+    channelId: string;
+    type: number;
+  };
+  public timestamp: string;
+  public edited_timestamp: string;
 
-  constructor(message: Message) {
+  constructor(message: any) {
     this.id = message.id;
-    this.guildId = message.guildId;
-    this.channelId = message.channelId;
+    this.guildId = message.guild_id;
+    this.channelId = message.channel_id;
     this.content = message.content;
     this.mentions = this.extractMessageMentions(message);
-    this.attachments = message.attachments.map(
-      (e) => new GuildMessageAttachmentsDto(e),
+    this.attachments = message.attachments?.map(
+      (e: any) => new GuildMessageAttachmentsDto(e),
     );
-    this.reference = message.reference;
-    this.createdAt = message.createdAt;
-    this.channel = new GuildChannelDto(message.channel as TextChannel);
-    this.guild = new GuildDto(message.guild);
+    this.reference = {
+      messageId: message.message_reference?.message_id,
+      guildId: message.message_reference?.guild_id,
+      channelId: message.message_reference?.channel_id,
+      type: message.message_reference?.type,
+    };
+    this.timestamp = message.timestamp;
+    this.edited_timestamp = message.edited_timestamp;
 
     const guildMember = {
-      ...message.author,
-      guild: { id: message.guildId },
-      user: {
-        username: message.author.username,
-        globalName: message.author.globalName,
-        banner: message.author.banner,
-        bot: message.author.bot,
-        system: message.author.system,
-      },
-      displayName: message.author.displayName,
-      roles: message.member.roles,
-      permissions: message.member.permissions,
+      user: message.author,
+      roles: message.member?.roles,
+      joined_at: message.member?.joined_at,
+      pending: message.member?.pending,
+      banner: message.member?.banner,
+      avatar: message.member?.avatar,
+      guild_id: message.guild_id,
     };
 
-    this.author = new GuildMemberDto(guildMember as any);
+    this.author = new GuildMemberDto(guildMember);
   }
 
-  private extractMessageMentions(message: Message) {
+  private extractMessageMentions(message: any) {
     return {
-      everyone: message.mentions.everyone,
-      users: message.mentions.users.map((user) => ({
+      everyone: message.mention_everyone,
+      users: message.mentions?.map((user: any) => ({
         id: user.id,
-        bot: user.bot,
-        system: user.system,
+        bot: user.bot === true,
+        system: user.system === true,
         username: user.username,
-        globalName: user.globalName,
+        globalName: user.global_name,
         avatar: user.avatar,
       })),
     };
   }
 }
 
-export class GuildMessageUpdateDto {
-  public oldMessage: GuildMessageDto;
-  public newMessage: GuildMessageDto;
-
-  constructor(oldMessage: Message, newMessage: Message) {
-    this.oldMessage = new GuildMessageDto(oldMessage);
-    this.newMessage = new GuildMessageDto(newMessage);
-  }
-}
-
-export class GuildMessageReactionDto extends GuildMessageDto {
+export class GuildMessageReactionDto {
+  public messageId: string;
+  public messageAuthorId: string;
+  public channelId: string;
+  public guildId: string;
+  public author: GuildMemberDto;
+  public authorId: string;
   public emoji: GuildMessageEmoji;
-  public reactions: GuildMessageEmoji[] = [];
 
-  constructor(message: MessageReaction, member: User) {
-    super(message.message as Message);
-
+  constructor(message: any) {
+    this.messageId = message.message_id;
+    this.messageAuthorId = message.message_author_id;
+    this.channelId = message.channel_id;
+    this.guildId = message.guild_id;
+    this.author = new GuildMemberDto(message.member);
+    this.authorId = message.user_id;
     this.emoji = {
-      id: message.emoji.id,
-      name: message.emoji.name,
-      animated: message.emoji.animated,
-      imageURL: message.emoji.imageURL(),
-      createdAt: this.createdAt,
-      user: new GuildUserDto(member),
+      name: message.emoji?.name,
+      id: message.emoji?.id,
+      animated: message.emoji?.animated === true,
     };
-
-    for (const reaction of message.message.reactions.cache) {
-      this.reactions.push({
-        id: reaction[1].emoji.id,
-        name: reaction[1].emoji.name,
-        animated: reaction[1].emoji.animated,
-      });
-    }
   }
 }
 
@@ -113,15 +101,15 @@ export class GuildMessageAttachmentsDto {
   public contentType: string;
   public description: string;
 
-  constructor(attachment) {
-    this.name = attachment.name;
+  constructor(attachment: any) {
+    this.name = attachment.filename;
     this.id = attachment.id;
     this.size = attachment.size;
     this.url = attachment.url;
-    this.proxyURL = attachment.proxyURL;
+    this.proxyURL = attachment.proxy_url;
     this.height = attachment.height;
     this.width = attachment.width;
-    this.contentType = attachment.contentType;
+    this.contentType = attachment.content_type;
     this.description = attachment.description;
   }
 }
@@ -139,7 +127,4 @@ class GuildMessageEmoji {
   name: string;
   id: string;
   animated: boolean;
-  user?: GuildUserDto;
-  imageURL?: string;
-  createdAt?: Date;
 }
