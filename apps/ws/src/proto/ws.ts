@@ -13,18 +13,13 @@ export interface ProtoGrpcType {
     EventsService: SubtypeConstructor<typeof grpc.Client, _ws_EventsServiceClient> & { service: _ws_EventsServiceDefinition }
     Guild: MessageTypeDefinition
     GuildChannel: MessageTypeDefinition
-    GuildChannelUpdate: MessageTypeDefinition
     GuildEmoji: MessageTypeDefinition
     GuildMember: MessageTypeDefinition
-    GuildMemberUpdate: MessageTypeDefinition
+    GuildMemberVoiceState: MessageTypeDefinition
     GuildMessage: MessageTypeDefinition
-    GuildMessageReactionAdd: MessageTypeDefinition
-    GuildMessageUpdate: MessageTypeDefinition
+    GuildMessageReaction: MessageTypeDefinition
     GuildRole: MessageTypeDefinition
-    GuildRoleUpdate: MessageTypeDefinition
-    GuildUpdate: MessageTypeDefinition
-    GuildUser: MessageTypeDefinition
-    IdName: MessageTypeDefinition
+    GuildRoleDelete: MessageTypeDefinition
     MessageAttachment: MessageTypeDefinition
     MessageAuthor: MessageTypeDefinition
     MessageMention: MessageTypeDefinition

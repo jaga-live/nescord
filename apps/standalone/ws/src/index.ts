@@ -1,6 +1,6 @@
 import { WsClient } from '@nescord/ws';
 import { EventType } from '@nescord/ws/lib/enum/event-type.enum';
-import { GatewayIntentBits } from 'discord.js';
+import { GatewayIntentBits } from '@discordjs/core';
 import * as dotenv from 'dotenv';
 
 dotenv.config();

@@ -1,4 +1,4 @@
-import { GatewayIntentBits } from 'discord.js';
+import { GatewayIntentBits } from '@discordjs/core';
 import { EventType } from '../enum/event-type.enum';
 
 export interface WsClientOptions {

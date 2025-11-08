@@ -3,12 +3,8 @@ import { EventsServiceHandlers } from '../proto/ws/EventsService';
 import { Guild__Output } from '../proto/ws/Guild';
 import { NoResponse } from '../proto/ws/NoResponse';
 import { GuildChannel__Output } from '../proto/ws/GuildChannel';
-import { GuildChannelUpdate__Output } from '../proto/ws/GuildChannelUpdate';
 import { GuildMember__Output } from '../proto/ws/GuildMember';
-import { GuildMemberUpdate__Output } from '../proto/ws/GuildMemberUpdate';
 import { GuildRole__Output } from '../proto/ws/GuildRole';
-import { GuildRoleUpdate__Output } from '../proto/ws/GuildRoleUpdate';
-import { GuildUpdate__Output } from '../proto/ws/GuildUpdate';
 import { WsListener } from '../ws-listener';
 
 export class WsGrpcController implements EventsServiceHandlers {
@@ -75,14 +71,14 @@ export class WsGrpcController implements EventsServiceHandlers {
   }
 
   guildUpdate(
-    call: ServerUnaryCall<GuildUpdate__Output, NoResponse>,
+    call: ServerUnaryCall<any, NoResponse>,
     callback: sendUnaryData<NoResponse>,
   ) {
     this.handleEvent(this.guildUpdate.name, call, callback);
   }
 
   guildDelete(
-    call: ServerUnaryCall<Guild__Output, NoResponse>,
+    call: ServerUnaryCall<any, NoResponse>,
     callback: sendUnaryData<NoResponse>,
   ) {
     this.handleEvent(this.guildDelete.name, call, callback);
@@ -103,7 +99,7 @@ export class WsGrpcController implements EventsServiceHandlers {
   }
 
   channelUpdate(
-    call: ServerUnaryCall<GuildChannelUpdate__Output, NoResponse>,
+    call: ServerUnaryCall<any, NoResponse>,
     callback: sendUnaryData<NoResponse>,
   ) {
     this.handleEvent(this.channelUpdate.name, call, callback);
@@ -117,10 +113,17 @@ export class WsGrpcController implements EventsServiceHandlers {
   }
 
   guildMemberUpdate(
-    call: ServerUnaryCall<GuildMemberUpdate__Output, NoResponse>,
+    call: ServerUnaryCall<any, NoResponse>,
     callback: sendUnaryData<NoResponse>,
   ) {
     this.handleEvent(this.guildMemberUpdate.name, call, callback);
+  }
+
+  guildMemberRemove(
+    call: ServerUnaryCall<any, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.guildMemberRemove.name, call, callback);
   }
 
   roleCreate(
@@ -131,16 +134,23 @@ export class WsGrpcController implements EventsServiceHandlers {
   }
 
   roleUpdate(
-    call: ServerUnaryCall<GuildRoleUpdate__Output, NoResponse>,
+    call: ServerUnaryCall<any, NoResponse>,
     callback: sendUnaryData<NoResponse>,
   ) {
     this.handleEvent(this.roleUpdate.name, call, callback);
   }
 
   roleDelete(
-    call: ServerUnaryCall<GuildRole__Output, NoResponse>,
+    call: ServerUnaryCall<any, NoResponse>,
     callback: sendUnaryData<NoResponse>,
   ) {
     this.handleEvent(this.roleDelete.name, call, callback);
+  }
+
+  voiceStateUpdate(
+    call: ServerUnaryCall<any, NoResponse>,
+    callback: sendUnaryData<NoResponse>,
+  ) {
+    this.handleEvent(this.voiceStateUpdate.name, call, callback);
   }
 }

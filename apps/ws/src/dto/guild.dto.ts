@@ -1,73 +1,53 @@
-import {
-  Guild,
-  GuildDefaultMessageNotifications,
-  GuildExplicitContentFilter,
-  GuildMFALevel,
-  GuildPremiumTier,
-  GuildVerificationLevel,
-} from 'discord.js';
-
 export class GuildDto {
   public id: string;
   public name: string;
   public description: string;
   public icon: string;
   public features: string[];
-  public joinedTimestamp: number;
-  public maximumMembers: number;
+  public joinedAt: string;
+  public maxMembers: number;
   public rulesChannelId: string;
   public publicUpdatesChannelId: string;
   public preferredLocale: string;
   public ownerId: string;
-  public memberCount: number;
-  public channelCount: number;
-  public verificationLevel: GuildVerificationLevel;
-  public premiumTier: GuildPremiumTier;
-  public mfaLevel: GuildMFALevel;
+  public verificationLevel: number;
+  public premiumTier: number;
+  public mfaLevel: number;
   public afkChannelId: string;
   public afkTimeout: number;
   public systemChannelId: string;
-  public systemChannelFlags: string;
-  public defaultMessageNotifications: GuildDefaultMessageNotifications;
-  public explicitContentFilter: GuildExplicitContentFilter;
+  public systemChannelFlags: number;
+  public defaultMessageNotifications: number;
+  public explicitContentFilter: number;
   public premiumProgressBarEnabled: boolean;
-  public createdAt: Date;
+  public premiumSubscriptionCount: number;
 
-  constructor(guild: Guild) {
+  constructor(guild: any) {
+    if (!guild) {
+      return;
+    }
+
     this.id = guild.id;
     this.name = guild.name;
     this.description = guild.description;
     this.icon = guild.icon;
     this.features = guild.features;
-    this.joinedTimestamp = guild.joinedTimestamp;
-    this.maximumMembers = guild.maximumMembers;
-    this.rulesChannelId = guild.rulesChannelId;
-    this.publicUpdatesChannelId = guild.publicUpdatesChannelId;
-    this.preferredLocale = guild.preferredLocale;
-    this.ownerId = guild.ownerId;
-    this.memberCount = guild.memberCount;
-    this.channelCount = guild.channels?.cache?.size;
-    this.verificationLevel = guild.verificationLevel;
-    this.premiumTier = guild.premiumTier;
-    this.mfaLevel = guild.mfaLevel;
-    this.afkChannelId = guild.afkChannelId;
-    this.afkChannelId = guild.afkChannelId;
-    this.afkTimeout = guild.afkTimeout;
-    this.systemChannelId = guild.systemChannelId;
-    this.systemChannelFlags = guild.systemChannelFlags?.bitfield?.toString();
-    this.defaultMessageNotifications = guild.defaultMessageNotifications;
-    this.explicitContentFilter = guild.explicitContentFilter;
-    this.premiumProgressBarEnabled = guild.premiumProgressBarEnabled;
-    this.createdAt = guild.createdAt;
-  }
-}
-
-export class GuildUpdateDto {
-  public oldGuild: GuildDto;
-  public newGuild: GuildDto;
-
-  constructor(oldGuild: Guild, newGuild: Guild) {
-    this.oldGuild = new GuildDto(oldGuild);
-    this.newGuild = new GuildDto(newGuild);
+    this.joinedAt = guild.joined_at;
+    this.maxMembers = guild.max_members;
+    this.rulesChannelId = guild.rules_channel_id;
+    this.publicUpdatesChannelId = guild.public_updates_channel_id;
+    this.preferredLocale = guild.preferred_locale;
+    this.ownerId = guild.owner_id;
+    this.verificationLevel = guild.verification_level;
+    this.premiumTier = guild.premium_tier;
+    this.mfaLevel = guild.mfa_level;
+    this.afkChannelId = guild.afk_channel_id;
+    this.afkTimeout = guild.afk_timeout;
+    this.systemChannelId = guild.system_channel_id;
+    this.systemChannelFlags = guild.system_channel_flags;
+    this.defaultMessageNotifications = guild.default_message_notifications;
+    this.explicitContentFilter = guild.explicit_content_filter;
+    this.premiumProgressBarEnabled = guild.premium_progress_bar_enabled;
+    this.premiumSubscriptionCount = guild.premium_subscription_count;
   }
 }

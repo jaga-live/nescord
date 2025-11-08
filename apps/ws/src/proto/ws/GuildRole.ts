@@ -13,7 +13,6 @@ export interface GuildRole {
   'flags'?: (string);
   'icon'?: (string);
   'hoist'?: (boolean);
-  'createdAt'?: (string);
 }
 
 export interface GuildRole__Output {
@@ -28,5 +27,4 @@ export interface GuildRole__Output {
   'flags'?: (string);
   'icon'?: (string);
   'hoist'?: (boolean);
-  'createdAt'?: (string);
 }

@@ -1,40 +1,40 @@
 // Original file: apps/ws/src/proto/ws.proto
 
-import type { GuildRole as _ws_GuildRole, GuildRole__Output as _ws_GuildRole__Output } from '../ws/GuildRole';
-import type { Guild as _ws_Guild, Guild__Output as _ws_Guild__Output } from '../ws/Guild';
 
 export interface GuildMember {
   'id'?: (string);
   'username'?: (string);
   'guildId'?: (string);
-  'displayName'?: (string);
   'globalName'?: (string);
+  'displayName'?: (string);
+  'nick'?: (string);
   'avatar'?: (string);
-  'accent'?: (number);
+  'banner'?: (string);
+  'userAvatar'?: (string);
+  'userBanner'?: (string);
   'bot'?: (boolean);
   'system'?: (boolean);
-  'roles'?: (_ws_GuildRole)[];
-  'permissions'?: (string)[];
+  'roleIds'?: (string)[];
   'joinedAt'?: (string);
-  'createdAt'?: (string);
   'pending'?: (boolean);
-  'guild'?: (_ws_Guild | null);
+  'discriminator'?: (string);
 }
 
 export interface GuildMember__Output {
   'id'?: (string);
   'username'?: (string);
   'guildId'?: (string);
-  'displayName'?: (string);
   'globalName'?: (string);
+  'displayName'?: (string);
+  'nick'?: (string);
   'avatar'?: (string);
-  'accent'?: (number);
+  'banner'?: (string);
+  'userAvatar'?: (string);
+  'userBanner'?: (string);
   'bot'?: (boolean);
   'system'?: (boolean);
-  'roles'?: (_ws_GuildRole__Output)[];
-  'permissions'?: (string)[];
+  'roleIds'?: (string)[];
   'joinedAt'?: (string);
-  'createdAt'?: (string);
   'pending'?: (boolean);
-  'guild'?: (_ws_Guild__Output);
+  'discriminator'?: (string);
 }

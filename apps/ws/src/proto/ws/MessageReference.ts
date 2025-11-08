@@ -2,13 +2,15 @@
 
 
 export interface MessageReference {
+  'messageId'?: (string);
   'guildId'?: (string);
   'channelId'?: (string);
-  'messageId'?: (string);
+  'type'?: (number);
 }
 
 export interface MessageReference__Output {
+  'messageId'?: (string);
   'guildId'?: (string);
   'channelId'?: (string);
-  'messageId'?: (string);
+  'type'?: (number);
 }
